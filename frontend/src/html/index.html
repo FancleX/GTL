@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-  <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -17,7 +16,7 @@
   <title>Get To Learn</title>
 </head>
 
-<body>
+<body id="mainPage">
   <div class="container-fluid">
     <!-- navbar -->
     <nav class="navbar navbar-expand-lg navbar-light navbar-custom">
@@ -31,13 +30,13 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Home</a>
+              <a class="nav-link active" aria-current="page" href="index.html">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="#">Explore</a>
+              <a class="nav-link active" href="#" @click="goExplore">Explore</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="#">About us</a>
+              <a class="nav-link active" href="#welcome">About us</a>
             </li>
           </ul>
           <form class="d-flex">
@@ -49,97 +48,103 @@
       </div>
     </nav>
 
-    <!-- welcome introduction -->
-    <div class="welcome">
-      <div class="row">
-        <div class="col-sm-12">
-          <div class="intro intro-fluid">
-            <div class="container">
-              <h1 class="display-3">Welcome to Get To Learn</h1>
-              <p class="lead">At here you will learn some cool stuff</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- carousel  -->
-      <div class="row slides">
-        <div class="col"></div>
-        <div class="col-sm-8 col-md-4">
-          <div id="content-display" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-indicators">
-              <button type="button" data-bs-target="#content-display" data-bs-slide-to="0" class="active"
-                aria-current="true" aria-label="Slide 1"></button>
-              <button type="button" data-bs-target="#content-display" data-bs-slide-to="1"
-                aria-label="Slide 2"></button>
-              <button type="button" data-bs-target="#content-display" data-bs-slide-to="2"
-                aria-label="Slide 3"></button>
-            </div>
-            <div class="carousel-inner">
-              <div class="carousel-item active">
-                <img src="https://ichef.bbci.co.uk/news/999/cpsprodpb/15951/production/_117310488_16.jpg"
-                  class="d-block img-fluid img-center" alt="first slide">
-              </div>
-              <div class="carousel-item">
-                <img src="https://ichef.bbci.co.uk/news/999/cpsprodpb/15951/production/_117310488_16.jpg"
-                  class="d-block img-fluid img-center" alt="second slide">
-              </div>
-              <div class="carousel-item">
-                <img src="https://ichef.bbci.co.uk/news/999/cpsprodpb/15951/production/_117310488_16.jpg"
-                  class="d-block img-fluid img-center" alt="thrid slide">
-              </div>
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#content-display" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#content-display" data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
-          </div>
-        </div>
-        <div class="col"></div>
-      </div>
-
-      <!-- Footer -->
-      <footer class="page-footer font-small">
-        <div class="container-fluid">
+    <div>
+      <div class="mainPage-content" v-show="isHomePage">
+        <!-- welcome introduction -->
+        <div class="welcome">
           <div class="row">
-             <!-- Copyright -->
-        <div class="footer-copyright py-4 col-sm-12 col-lg-3">© 2022 Copyright:
-          <a href="#"> MDBootstrap.com</a>
-        </div>
-            <div class="col-sm-12 col-lg-9 socialWrapper">
-              <a href="https://facebook.com" target="_blank">
-                <i class="fa fa-facebook-square fa-3x" aria-hidden="true"></i></a>
-              <a href="https://google.com" target="_blank">
-                <i class="fa fa-google-plus-square fa-3x" aria-hidden="true"></i></a>
-              <a href="https://instagram.com" target="_blank">
-                <i class="fa fa-instagram fa-3x" aria-hidden="true"></i></a>
+            <div class="col-sm-12">
+              <div class="intro intro-fluid">
+                <div class="container">
+                  <h1 class="display-3">Welcome to Get To Learn</h1>
+                  <p class="lead">At here you will learn some cool stuff</p>
+                </div>
+              </div>
             </div>
           </div>
+
+          <!-- carousel  -->
+          <div class="row slides">
+            <div class="col"></div>
+            <div class="col-sm-8 col-md-4">
+              <div id="content-display" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                  <button type="button" data-bs-target="#content-display" data-bs-slide-to="0" class="active"
+                    aria-current="true" aria-label="Slide 1"></button>
+                  <button type="button" data-bs-target="#content-display" data-bs-slide-to="1"
+                    aria-label="Slide 2"></button>
+                  <button type="button" data-bs-target="#content-display" data-bs-slide-to="2"
+                    aria-label="Slide 3"></button>
+                </div>
+                <div class="carousel-inner">
+                  <div class="carousel-item active">
+                    <img src="https://ichef.bbci.co.uk/news/999/cpsprodpb/15951/production/_117310488_16.jpg"
+                      class="d-block img-fluid img-center" alt="first slide">
+                  </div>
+                  <div class="carousel-item">
+                    <img src="https://ichef.bbci.co.uk/news/999/cpsprodpb/15951/production/_117310488_16.jpg"
+                      class="d-block img-fluid img-center" alt="second slide">
+                  </div>
+                  <div class="carousel-item">
+                    <img src="https://ichef.bbci.co.uk/news/999/cpsprodpb/15951/production/_117310488_16.jpg"
+                      class="d-block img-fluid img-center" alt="thrid slide">
+                  </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#content-display"
+                  data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#content-display"
+                  data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
+            </div>
+            <div class="col"></div>
+          </div>
         </div>
-      </footer>
+      </div>
+
+      <!-- content display section -->
+      <section id="contentDisplay" v-show="isExplorePage"> 
+        <div href="contentExplorer.html">
+        </div>
+      </section>
     </div>
 
-    <!-- <script src="https://unpkg.com/vue@3"></script>
 
-  <div id="app">{{ message }}</div>
 
-  <script>
-    Vue.createApp({
-      data() {
-        return {
-          message: 'Hello Vue!'
-        }
-      }
-    }).mount('#app')
-  </script> -->
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-      crossorigin="anonymous"></script>
+
+
+    <!-- Footer -->
+    <footer class="page-footer font-small">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- Copyright -->
+          <div class="footer-copyright py-4 col-sm-12 col-lg-3">© 2022 Copyright:
+            <a href="#"> MDBootstrap.com</a>
+          </div>
+          <div class="col-sm-12 col-lg-9 socialWrapper">
+            <a href="https://facebook.com" target="_blank">
+              <i class="fa fa-facebook-square fa-3x" aria-hidden="true"></i></a>
+            <a href="https://google.com" target="_blank">
+              <i class="fa fa-google-plus-square fa-3x" aria-hidden="true"></i></a>
+            <a href="https://instagram.com" target="_blank">
+              <i class="fa fa-instagram fa-3x" aria-hidden="true"></i></a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.18/vue.min.js"></script>
+  <script src="../js/index.js"></script>
 </body>
 
 </html>

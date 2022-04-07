@@ -78,6 +78,11 @@ img.user-profileImg {
     box-shadow: 5px 5px 5px .1rem rgba(39, 37, 37, 0.5);
 }
 
+.carousel-inner:hover {
+    transform: scale(1.05);
+    transition: 1000ms;
+}
+
 .img-center {
     display: block;
     margin: auto;
