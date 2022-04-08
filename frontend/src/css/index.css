@@ -81,6 +81,7 @@ img.user-profileImg {
 .carousel-inner {
     border-radius: 5px;
     box-shadow: 5px 5px 5px .1rem rgba(39, 37, 37, 0.5);
+    transition: 500ms;
 }
 
 .carousel-inner:hover {
