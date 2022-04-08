@@ -34,13 +34,13 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+              <a class="nav-link active" aria-current="page" href="index.html" @click="showAboutUs">Home</a>
             </li>
             <li class="nav-item">
               <a class="nav-link active" href="#" @click="goExplore">Explore</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="#aboutUs">About us</a>
+              <a class="nav-link active" href="#aboutUs" @click="showAboutUs">About us</a>
             </li>
           </ul>
           <form class="d-flex">
@@ -52,7 +52,7 @@
       </div>
     </nav>
 
-    <div>
+    <div class="dynamic-section">
       <div class="mainPage-content" v-show="isHomePage">
         <!-- welcome introduction -->
         <div class="welcome" id="aboutUs">
@@ -128,7 +128,7 @@
 
 
     <!-- Footer -->
-    <footer class="page-footer font-small">
+    <footer class="page-footer font-small" v-show="isHomePage">
       <div class="container-fluid">
         <div class="row">
           <!-- Copyright -->

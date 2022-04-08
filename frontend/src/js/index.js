@@ -2,13 +2,16 @@
     el: "#mainPage",
     data:{
         isHomePage: true,
-        isExplorePage: false
+        isExplorePage: false,
     },
     methods:{
         goExplore:function(){
             this.isHomePage = false;
             this.isExplorePage = true;
+        },
+        showAboutUs:function(){
+            this.isHomePage = true;
+            this.isExplorePage = false;
         }
     }
-
  })
