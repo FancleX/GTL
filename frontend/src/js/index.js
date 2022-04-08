@@ -8,7 +8,6 @@
         goExplore:function(){
             this.isHomePage = false;
             this.isExplorePage = true;
-            console.log(1);
         }
     }
 

@@ -13,6 +13,10 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="../css/index.css">
 
+<!-- import other pages -->
+  <link rel="import" href="contentExplorer.html" id="contentExplorer">
+
+
   <title>Get To Learn</title>
 </head>
 
@@ -36,7 +40,7 @@
               <a class="nav-link active" href="#" @click="goExplore">Explore</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="#welcome">About us</a>
+              <a class="nav-link active" href="#aboutUs">About us</a>
             </li>
           </ul>
           <form class="d-flex">
@@ -51,7 +55,7 @@
     <div>
       <div class="mainPage-content" v-show="isHomePage">
         <!-- welcome introduction -->
-        <div class="welcome">
+        <div class="welcome" id="aboutUs">
           <div class="row">
             <div class="col-sm-12">
               <div class="intro intro-fluid">
@@ -108,9 +112,13 @@
       </div>
 
       <!-- content display section -->
+      <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
       <section id="contentDisplay" v-show="isExplorePage"> 
-        <div href="contentExplorer.html">
-        </div>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#contentDisplay').load('contentExplorer.html');
+            });
+        </script>
       </section>
     </div>
 
