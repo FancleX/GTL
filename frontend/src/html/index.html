@@ -78,7 +78,7 @@
                 </div>
                 <div class="carousel-inner">
                   <div class="carousel-item active">
-                    <a href="../html/content.html">
+                    <a href="#" @click="goContent">
                       <img src="https://ichef.bbci.co.uk/news/999/cpsprodpb/15951/production/_117310488_16.jpg"
                         class="d-block img-fluid img-center" alt="first slide"></a>
                   </div>
@@ -118,7 +118,7 @@
         </script>
       </section>
 
-      <section id="contentDisplay" v-show="iscontentPage"> 
+      <section id="contentDisplay" v-show="isContentPage"> 
         <script type="text/javascript">
             $(document).ready(function () {
                 $('#contentDisplay').load('content.html');
