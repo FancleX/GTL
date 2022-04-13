@@ -19,7 +19,7 @@ public class ResultStatus {
      * @param <T>
      * @return
      */
-    public static <T> BaseResponse<T> fail() {
-        return new BaseResponse<T>(500, null, "failed");
+    public static <T> BaseResponse<T> fail(String message) {
+        return new BaseResponse<>(500, null, message);
     }
 }
