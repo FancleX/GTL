@@ -24,16 +24,21 @@ public class Article {
         strategy = GenerationType.SEQUENCE,
         generator = "article_sequence"
     )
+    private Long id;
     private String header;
     private Paragraph paragraphs;
     private List<Question> problemSet;
     private List<String> comments;
 
-    public Article(String header, Paragraph paragraphs) {
+    public Article(String header, Paragraph paragraphs, List<Question> problemSet) {
         this.header = header;
         this.paragraphs = paragraphs;
-        this.problemSet = new ArrayList<>();
+        this.problemSet = problemSet;
         this.comments = new ArrayList<>();
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getHeader() {
@@ -54,6 +59,10 @@ public class Article {
 
     public void addQuestion(Question question) {
         this.problemSet.add(question);
+    }
+
+    public void deleteQuestion(Question question) {
+        this.problemSet.remove(question);
     }
 
     public List<String> getComments() {
