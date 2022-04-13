@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/content")
-public class articleController {
+public class ArticleController {
     
     
 
