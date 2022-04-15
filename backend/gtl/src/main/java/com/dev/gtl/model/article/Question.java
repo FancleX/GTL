@@ -1,63 +1,50 @@
 package com.dev.gtl.model.article;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import lombok.Data;
+
+@Entity
+@Table(name = "article_question")
+@Data
 public class Question {
     
-    private int number;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "descripton")
     private String description;
+
+    @Column(name = "answer")
     private String answer;
+
+    @Column(name = "explaination")
     private String explaination;
 
-    public Question(int number, String description, String answer, String explaination) {
-        this.number = number;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "article_id")
+    private Article article; 
+
+
+    public Question() {
+    }
+
+
+    public Question(String description, String answer, String explaination, Article article) {
         this.description = description;
         this.answer = answer;
         this.explaination = explaination;
+        this.article = article;
     }
-
-
-    public int getNumber() {
-        return this.number;
-    }
-
-    public void setNumber(int number) {
-        this.number = number;
-    }
-
-    public String getDescription() {
-        return this.description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getAnswer() {
-        return this.answer;
-    }
-
-    public void setAnswer(String answer) {
-        this.answer = answer;
-    }
-
-    public String getExplaination() {
-        return this.explaination;
-    }
-
-    public void setExplaination(String explaination) {
-        this.explaination = explaination;
-    }
-
-
-    @Override
-    public String toString() {
-        return "{" +
-            " number='" + getNumber() + "'" +
-            ", description='" + getDescription() + "'" +
-            ", answer='" + getAnswer() + "'" +
-            ", explaination='" + getExplaination() + "'" +
-            "}";
-    }
-
 
 
 }

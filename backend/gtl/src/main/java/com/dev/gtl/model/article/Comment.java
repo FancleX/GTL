@@ -13,39 +13,32 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "article_paragraph")
+@Table(name = "comment")
 @Data
-public class Paragraph {
-    
+public class Comment {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "order")
-    private Byte order;
+    // @Column(name = "descripton")
+    // private String username;
 
-    @Column(name = "subHeader")
-    private String subHeader;
-
-    @Column(name = "content")
-    private String content;
+    @Column(name = "message")
+    private String message;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "article_id")
-    private Article article;
+    private Article article; 
 
 
-    public Paragraph() {
+    public Comment() {
     }
 
-
-    public Paragraph(Byte order, String subHeader, String content, Article article) {
-        this.order = order;
-        this.subHeader = subHeader;
-        this.content = content;
+    public Comment(String message, Article article) {
+        this.message = message;
         this.article = article;
     }
-
 
 
 }

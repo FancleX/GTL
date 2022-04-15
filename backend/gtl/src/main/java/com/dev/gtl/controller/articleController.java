@@ -8,14 +8,13 @@ import com.dev.gtl.response.BaseResponse;
 import com.dev.gtl.service.ArticleService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 
@@ -30,6 +29,7 @@ public class ArticleController {
         this.articleService = articleService;
     }
 
+    // article
     // get all articles
     @GetMapping("/explorer")
     public @ResponseBody BaseResponse<List<Article>> getArticles() {
@@ -48,14 +48,82 @@ public class ArticleController {
         return articleService.addArticle(article);
     }
 
-    // add comments that updates the article
-    @PutMapping("/user/addComment/{articleId}/{comment}")
+    // delete a article
+    @DeleteMapping("")
+    public BaseResponse<Long> deleteArticle(@PathVariable Map<String, String> res) {
+        Long articleId = Long.parseLong(res.get("articleId"));
+        String comment = res.get("comment");
+        return articleService.deleteComment(articleId, comment);
+    }
+
+    // comment
+    // get comment of a article
+    @GetMapping("")
+    public @ResponseBody BaseResponse<List<Article>> getComments() {
+        return articleService.getArticles();
+    }
+
+    // add comments
+    @PostMapping("/user/addComment/{articleId}/{comment}")
     public BaseResponse<Long> addComment(@PathVariable Map<String, String> res) {
         Long articleId = Long.parseLong(res.get("articleId"));
         String comment = res.get("comment");
         return articleService.addComment(articleId, comment);
     }
      
+    // delete comments
+    @DeleteMapping("/user/deleteComment/{articleId}/{comment}")
+    public BaseResponse<Long> deleteComment(@PathVariable Map<String, String> res) {
+        Long articleId = Long.parseLong(res.get("articleId"));
+        String comment = res.get("comment");
+        return articleService.deleteComment(articleId, comment);
+    }
+    
 
+    // paragraphs
+    // get paragraphs
+    @GetMapping("")
+    public @ResponseBody BaseResponse<List<Article>> getParagraphs() {
+        return articleService.getArticles();
+    }
+
+    // add paragraphs
+    @PostMapping("")
+    public BaseResponse<Long> addParagraphs(@PathVariable Map<String, String> res) {
+        Long articleId = Long.parseLong(res.get("articleId"));
+        String comment = res.get("comment");
+        return articleService.addComment(articleId, comment);
+    }
+
+    // delete paragraphs
+    @DeleteMapping("/user/deleteComment/{articleId}/{comment}")
+    public BaseResponse<Long> deleteParagraphs(@PathVariable Map<String, String> res) {
+        Long articleId = Long.parseLong(res.get("articleId"));
+        String comment = res.get("comment");
+        return articleService.deleteComment(articleId, comment);
+    }
+
+    // question
+    // get questions
+    @GetMapping("")
+    public @ResponseBody BaseResponse<List<Article>> getQuestions() {
+        return articleService.getArticles();
+    }
+
+    // add questions
+    @PostMapping("")
+    public BaseResponse<Long> addQuestion(@PathVariable Map<String, String> res) {
+        Long articleId = Long.parseLong(res.get("articleId"));
+        String comment = res.get("comment");
+        return articleService.addComment(articleId, comment);
+    }
+
+    // delete questions
+    @DeleteMapping("")
+    public BaseResponse<Long> deleteQuestion(@PathVariable Map<String, String> res) {
+        Long articleId = Long.parseLong(res.get("articleId"));
+        String comment = res.get("comment");
+        return articleService.deleteComment(articleId, comment);
+    }
 
 }

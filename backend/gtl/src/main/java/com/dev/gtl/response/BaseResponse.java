@@ -2,7 +2,6 @@ package com.dev.gtl.response;
 
 import org.springframework.stereotype.Component;
 
-@Component
 public class BaseResponse<T> {
     
     private int code;
