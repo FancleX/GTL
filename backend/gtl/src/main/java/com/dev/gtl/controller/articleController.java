@@ -57,7 +57,7 @@ public class ArticleController {
     }
 
     // comment
-    // get comment of a article
+    // get comment of an article
     @GetMapping("")
     public @ResponseBody BaseResponse<List<Article>> getComments() {
         return articleService.getArticles();
@@ -81,7 +81,7 @@ public class ArticleController {
     
 
     // paragraphs
-    // get paragraphs
+    // get paragraphs of an article
     @GetMapping("")
     public @ResponseBody BaseResponse<List<Article>> getParagraphs() {
         return articleService.getArticles();
@@ -104,7 +104,7 @@ public class ArticleController {
     }
 
     // question
-    // get questions
+    // get questions of an article
     @GetMapping("")
     public @ResponseBody BaseResponse<List<Article>> getQuestions() {
         return articleService.getArticles();

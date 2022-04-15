@@ -10,11 +10,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "article_question")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Question {
     
     @Id
@@ -33,18 +37,4 @@ public class Question {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "article_id")
     private Article article; 
-
-
-    public Question() {
-    }
-
-
-    public Question(String description, String answer, String explaination, Article article) {
-        this.description = description;
-        this.answer = answer;
-        this.explaination = explaination;
-        this.article = article;
-    }
-
-
 }

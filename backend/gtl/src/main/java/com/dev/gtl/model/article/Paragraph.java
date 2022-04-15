@@ -10,11 +10,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "article_paragraph")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Paragraph {
     
     @Id
@@ -33,19 +37,4 @@ public class Paragraph {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "article_id")
     private Article article;
-
-
-    public Paragraph() {
-    }
-
-
-    public Paragraph(Byte order, String subHeader, String content, Article article) {
-        this.order = order;
-        this.subHeader = subHeader;
-        this.content = content;
-        this.article = article;
-    }
-
-
-
 }
