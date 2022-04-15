@@ -37,8 +37,8 @@ public class ArticleController {
     }
 
     // get a specific article
-    @GetMapping("/serach/{articleId}")
-    public BaseResponse<Article> getArticleById(@PathVariable(value = "articleId") String id) {
+    @GetMapping("/search/{articleId}")
+    public BaseResponse<Article> getArticleById(@PathVariable(value = "articleId") Long id) {
         return articleService.getArticleById(id);
     }
 
@@ -48,13 +48,11 @@ public class ArticleController {
         return articleService.addArticle(article);
     }
 
-    // // delete a article
-    // @DeleteMapping("/delete")
-    // public BaseResponse<Long> deleteArticle(@PathVariable Map<String, String> res) {
-    //     Long articleId = Long.parseLong(res.get("articleId"));
-    //     String comment = res.get("comment");
-    //     return articleService.deleteComment(articleId, comment);
-    // }
+    // delete a article
+    @DeleteMapping("/delete/{articleId}")
+    public BaseResponse<String> deleteArticle(@PathVariable(value = "articleId") Long id) {
+        return articleService.deleteArticle(id);
+    }
 
     // /* #################################################################################### */
     // // comment
