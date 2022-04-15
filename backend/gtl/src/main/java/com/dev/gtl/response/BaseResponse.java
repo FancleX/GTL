@@ -1,7 +1,8 @@
 package com.dev.gtl.response;
 
-import org.springframework.stereotype.Component;
+import lombok.Data;
 
+@Data
 public class BaseResponse<T> {
     
     private int code;
