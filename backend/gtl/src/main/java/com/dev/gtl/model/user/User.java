@@ -1,43 +1,50 @@
 package com.dev.gtl.model.user;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import com.dev.gtl.model.article.Article;
+import com.dev.gtl.model.article.Comment;
+
+import lombok.Data;
+
+@Entity
+@Table(name = "user_learner")
+@Data
 public class User {
     
-    private String nickname;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_account")
     private Account account;
-    private List<Long> bookMarks;
 
-    public User(String nickname, Account account) {
-        this.nickname = nickname;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_bookmark")
+    private List<Article> bookMarks;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_contribution")
+    private List<Article> contribution;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_comments")
+    private List<Comment> comments;
+
+    public User(Account account, List<Article> bookMarks) {
         this.account = account;
-        this.bookMarks = new ArrayList<>();
-    }
-
-    public String getNickname() {
-        return this.nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
-    public List<Long> getBookMarks() {
-        return this.bookMarks;
-    }
-
-    public void addBookMark(long articleId) {
-        this.bookMarks.add(articleId);
-    }
-
-
-    @Override
-    public String toString() {
-        return "{" +
-            " nickname='" + getNickname() + "'" +
-            ", bookMarks='" + getBookMarks() + "'" +
-            "}";
+        this.bookMarks = bookMarks;
     }
 
 }

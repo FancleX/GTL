@@ -1,39 +1,35 @@
 package com.dev.gtl.model.user;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import lombok.Data;
+
+@Entity
+@Table(name = "account")
+@Data
 public class Account {
     
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "username")
+    private String userName;
+
+    @Column(name = "email")
     private String email;
+
+    @Column(name = "password")
     private String passWord;
 
+    @Column(name = "accounttype")
+    private String accountType;
 
-    public Account(String email, String passWord) {
-        this.email = email;
-        this.passWord = passWord;
-    }
-    
-    public String getEmail() {
-        return this.email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassWord() {
-        return this.passWord;
-    }
-
-    public void setPassWord(String passWord) {
-        this.passWord = passWord;
-    }
-
-    @Override
-    public String toString() {
-        return "{" +
-            " email='" + getEmail() + "'" +
-            ", passWord='" + getPassWord() + "'" +
-            "}";
-    }
 }
 
 

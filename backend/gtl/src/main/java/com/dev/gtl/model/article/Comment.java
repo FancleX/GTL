@@ -18,9 +18,6 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // @Column(name = "descripton")
-    // private String username;
-
     @Column(name = "message")
     private String message;
 }
