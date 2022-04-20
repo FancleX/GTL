@@ -29,6 +29,9 @@ public class Article {
     
     @Column(name = "header")
     private String header;
+
+    @Column(name = "imgUrl")
+    private String imgUrl;
     
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "article_id")

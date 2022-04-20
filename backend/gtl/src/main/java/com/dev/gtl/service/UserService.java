@@ -1,9 +1,11 @@
 package com.dev.gtl.service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import com.dev.gtl.model.article.Article;
+import com.dev.gtl.model.article.Comment;
 import com.dev.gtl.model.user.Account;
 import com.dev.gtl.model.user.User;
 import com.dev.gtl.repository.AccountRepository;
@@ -11,6 +13,9 @@ import com.dev.gtl.repository.UserRepository;
 import com.dev.gtl.response.BaseResponse;
 import com.dev.gtl.response.ResultStatus;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -75,5 +80,47 @@ public class UserService {
         }
         return ResultStatus.fail("incorrect password");
     }
+
+    public BaseResponse<List<Article>> getBookMarks(Long id) {
+        if (!userRepository.existsById(id)) {
+            return ResultStatus.fail("the user doesn't exist");
+        }
+        User user = userRepository.findById(id).get();
+        return ResultStatus.success(user.getBookMarks());
+    }
+
+    @Transactional
+    public BaseResponse<String> addBookMarks(String data) {
+        try {
+            Object obj = new JSONParser().parse(data);
+            JSONObject jo = (JSONObject) obj;
+            Long userId = (Long) jo.get("userId");
+            Long articleId = (Long) jo.get("articleId");
+            userRepository.addBookMark(userId, articleId);
+            return ResultStatus.success("bookmark done");
+        } catch (ParseException e) {
+            return ResultStatus.fail("input format is wrong");
+        }
+    }
+
+    public BaseResponse<List<Comment>> getComments(Long userId) {
+        try {
+            User user = userRepository.findById(userId).get();
+            return ResultStatus.success(user.getComments());
+        } catch (NoSuchElementException e) {
+            return ResultStatus.fail("the user doesn't exist");
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
 
 }
