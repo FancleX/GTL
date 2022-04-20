@@ -76,14 +76,4 @@ public class UserService {
         return ResultStatus.fail("incorrect password");
     }
 
-
-    @Transactional
-    public BaseResponse<Long> contribute(Long userId, Article article) {
-        Optional<User> u = userRepository.findById(userId);
-        User user = u.get();
-        user.getContribution().add(article);
-        return ResultStatus.success(article.getId());
-    }
-
-
 }

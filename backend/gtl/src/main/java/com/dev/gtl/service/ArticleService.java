@@ -4,11 +4,17 @@ import java.util.List;
 import java.util.Optional;
 
 import com.dev.gtl.model.article.Article;
+import com.dev.gtl.model.article.Comment;
 import com.dev.gtl.repository.ArticleRepository;
-import com.dev.gtl.repository.UserRepository;
+import com.dev.gtl.repository.CommentRepository;
 import com.dev.gtl.response.BaseResponse;
 import com.dev.gtl.response.ResultStatus;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,15 +23,16 @@ import org.springframework.transaction.annotation.Transactional;
 public class ArticleService {
 
     private final ArticleRepository articleRepository;
+    private final CommentRepository commentRepository;
 
     @Autowired
-    public ArticleService(ArticleRepository articleRepository) {
+    public ArticleService(ArticleRepository articleRepository, CommentRepository commentRepository) {
         this.articleRepository = articleRepository;
+        this.commentRepository = commentRepository;
     }
 
     /*
      * #############################################################################
-     * #######
      */
     // article
     public BaseResponse<List<Article>> getArticles() {
@@ -41,7 +48,8 @@ public class ArticleService {
         return ResultStatus.fail("the article doesn't exist");
     }
 
-    public BaseResponse<Long> addArticle(Article article) {
+    @Transactional
+    public BaseResponse<String> addArticle(Article article, Long id) {
         // don't accept an article with an empty header
         if (article.getHeader() == null) {
             return ResultStatus.fail("header can't be empty");
@@ -55,7 +63,9 @@ public class ArticleService {
         }
         // successfully save and return the article id
         articleRepository.save(article);
-        return ResultStatus.success(article.getId());
+        // update author
+        articleRepository.markAuthor(article.getId(), id);
+        return ResultStatus.success("article: " + article.getId() + " created by: " + id);
     }
 
     @Transactional
@@ -77,66 +87,52 @@ public class ArticleService {
         return ResultStatus.success(null);
     }
 
+    public BaseResponse<String> editArticle(Article article) {
+        Article oldArticle = articleRepository.findById(article.getId()).get();
+        merge(article, oldArticle);
+        articleRepository.save(oldArticle);
+        return ResultStatus.success("updated");   
+    }
 
+    public static <T> void merge(T source, T target) {
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        modelMapper.map(source, target);
+    }
 
+    @Transactional
+    public BaseResponse<String> addComment(String comment) {
+        // parse json file
+        try {
+            Object obj = new JSONParser().parse(comment);
+            JSONObject jo = (JSONObject) obj;
+            Long userId = (Long) jo.get("userId");
+            Long articleId = (Long) jo.get("articleId");
+            String message = (String) jo.get("message");
+            // System.out.println(message);
 
-    // /*
-    // ####################################################################################
-    // */
-    // // comment
-    // @Transactional
-    // public BaseResponse<Long> addComment(Long id, String comment) {
-    // try {
-    // Optional<Article> target = articleRepository.findById(id);
-    // if (!target.isPresent()) {
-    // throw new NotFoundException();
-    // }
-    // Article article = target.get();
-    // article.addComments(comment);
-    // return ResultStatus.success(article.getId());
-    // } catch (IllegalArgumentException e) {
-    // return ResultStatus.fail("invalid id");
-    // } catch (NotFoundException e) {
-    // return ResultStatus.fail("the article doesn't exist");
-    // }
-    // }
+            // check comment if is valid
+            if ((message == null) || ("".equals(message))) {
+                return ResultStatus.fail("comment cannot be empty");
+            }
+            Article article = articleRepository.findById(articleId).get();
+            Comment newComment = new Comment();
+            newComment.setMessage(message);
+            article.getComments().add(newComment);
+            commentRepository.save(newComment);
+            // bind comment with the user 
+            articleRepository.CommentCreatedBy(userId, newComment.getId());
+            return ResultStatus.success("comment added");
+        } catch (ParseException e) {
+            return ResultStatus.fail("Illegal format");
+        }
+    }  
 
-    // @Transactional
-    // public BaseResponse<Long> deleteComment(Long id, String comment) {
-    // try {
-    // if (comment.isEmpty()) {
-    // throw new IllegalArgumentException();
-    // }
-    // Optional<Article> target = articleRepository.findById(id);
-    // if (!target.isPresent()) {
-    // throw new NotFoundException();
-    // }
-    // Article article = target.get();
-    // Iterator<String> it = article.getComments().iterator();
-    // while (it.hasNext()) {
-    // String userComment = it.next();
-    // if (userComment == comment) {
-    // it.remove();
-    // }
-    // }
-    // return ResultStatus.success(article.getId());
-    // } catch (IllegalArgumentException e) {
-    // return ResultStatus.fail("invalid id or empty comment");
-    // } catch (NotFoundException e) {
-    // return ResultStatus.fail("the article doesn't exist");
-    // }
-    // }
-
-    /*
-     * #############################################################################
-     * #######
-     */
-    // paragraphs
-
-    /*
-     * #############################################################################
-     * #######
-     */
-    // questions
-
+    public BaseResponse<String> deleteComment(Long id) {
+        if (!commentRepository.existsById(id)) {
+            return ResultStatus.fail("comment not found");
+        }
+        commentRepository.deleteById(id);
+        return ResultStatus.success("comment deleted");
+    }
 }

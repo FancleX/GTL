@@ -46,16 +46,9 @@ public class UserController {
     }
 
     // user signin
-    // format "email=xxxx&password=xxxxxxxx"
+    // JSON format {"data": "email=xxxx&password=xxxxxxxx"}
     @PostMapping("/sign_in")
     public BaseResponse<Boolean> isSignIn(@RequestBody String data) {
         return userService.isSignIn(data);
     }
-
-    // user create an article
-    @PostMapping("/contribute/{userid}/{articleId}")
-    public BaseResponse<Long> contribute(@PathVariable(value = "userId") Long id, @PathVariable(value = "article") Article article) {
-        return userService.contribute(id, article);
-    }
-
 }
