@@ -15,11 +15,15 @@ import javax.persistence.Table;
 import com.dev.gtl.model.article.Article;
 import com.dev.gtl.model.article.Comment;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "user_learner")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
     
     @Id
@@ -42,9 +46,9 @@ public class User {
     @JoinColumn(name = "user_comments")
     private List<Comment> comments;
 
-    public User(Account account, List<Article> bookMarks) {
-        this.account = account;
-        this.bookMarks = bookMarks;
-    }
+    // public User(Account account, List<Article> bookMarks) {
+    //     this.account = account;
+    //     this.bookMarks = bookMarks;
+    // }
 
 }

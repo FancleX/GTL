@@ -5,24 +5,30 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity
-public enum AccountType {
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+// @Entity
+// @NoArgsConstructor
+// @AllArgsConstructor
+// public enum AccountType {
     
-    ADMIN {
-        @Override
-        public String toString() {
-            return "ADMIN";
-        }
-    },
-    NORMAL {
-        @Override
-        public String toString() {
-            return "NORMAL";
-        }
-    };
+//     ADMIN {
+//         @Override
+//         public String toString() {
+//             return "ADMIN";
+//         }
+//     },
+//     NORMAL {
+//         @Override
+//         public String toString() {
+//             return "NORMAL";
+//         }
+//     };
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+//     @Id
+//     @GeneratedValue(strategy = GenerationType.IDENTITY)
+//     private Long id;
 
-}
+// }

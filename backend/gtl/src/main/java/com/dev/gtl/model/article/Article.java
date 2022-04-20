@@ -43,11 +43,11 @@ public class Article {
     private List<Comment> comments;
 
 
-    public Article(String header, List<Paragraph> paragraphs, List<Question> questions, List<Comment> comments) {
-        this.header = header;
-        this.paragraphs = paragraphs;
-        this.questions = questions;
-        this.comments = comments;
-    }
+    // public Article(String header, List<Paragraph> paragraphs, List<Question> questions, List<Comment> comments) {
+    //     this.header = header;
+    //     this.paragraphs = paragraphs;
+    //     this.questions = questions;
+    //     this.comments = comments;
+    // }
 
 }

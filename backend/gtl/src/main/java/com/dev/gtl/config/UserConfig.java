@@ -6,7 +6,7 @@ import javax.transaction.Transactional;
 
 import com.dev.gtl.model.article.Article;
 import com.dev.gtl.model.user.Account;
-import com.dev.gtl.model.user.AccountType;
+// import com.dev.gtl.model.user.AccountType;
 import com.dev.gtl.model.user.User;
 import com.dev.gtl.repository.UserRepository;
 

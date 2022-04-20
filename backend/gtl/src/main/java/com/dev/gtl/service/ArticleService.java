@@ -1,9 +1,11 @@
 package com.dev.gtl.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.dev.gtl.model.article.Article;
 import com.dev.gtl.repository.ArticleRepository;
+import com.dev.gtl.repository.UserRepository;
 import com.dev.gtl.response.BaseResponse;
 import com.dev.gtl.response.ResultStatus;
 
@@ -33,8 +35,8 @@ public class ArticleService {
 
     public BaseResponse<Article> getArticleById(Long id) {
         if (articleRepository.existsById(id)) {
-            Article article = articleRepository.getById(id);
-            return ResultStatus.success(article);
+            Optional<Article> article = articleRepository.findById(id);
+            return ResultStatus.success(article.get());
         } 
         return ResultStatus.fail("the article doesn't exist");
     }
@@ -74,6 +76,7 @@ public class ArticleService {
         articleRepository.delete(article);
         return ResultStatus.success(null);
     }
+
 
 
 
