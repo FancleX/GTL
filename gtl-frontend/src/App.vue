@@ -1,24 +1,16 @@
 <template>
   <div class="container-fluid">
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App" /> -->
-    <PageHeader />
-    <MainPage />
-    <PageFooter />
+    <BasePage />
   </div>
 </template>
 
 <script>
-// import HelloWorld from "./components/HelloWorld.vue";
-import PageHeader from "./components/PageHeader.vue";
-import MainPage from "./components/MainPage.vue";
-import PageFooter from "./components/PageFooter.vue";
+import BasePage from "./components/BasePage.vue";
 
 export default {
   name: "App",
   components: {
-    PageHeader,
-    MainPage,
-    PageFooter,
+    BasePage,
   },
 };
 </script>

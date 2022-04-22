@@ -1,0 +1,211 @@
+<template>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col"></div>
+      <div class="col-sm-12 col-md-10">
+        <div class="row">
+          <div class="header">
+            <header class="articleHeader">Explaination of Set</header>
+          </div>
+        </div>
+      </div>
+      <div class="col"></div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4 navList">
+        <ul class="navbar-vertical">
+          <div class="nav-wrapper">
+            <a href="#articleHeader" style="text-decoration: none">
+              <li class="overview">Overview</li>
+            </a>
+            <a href="#subheader" style="text-decoration: none">
+              <li class="nav-list">section1</li>
+            </a>
+            <a href="#subheader1" style="text-decoration: none">
+              <li class="nav-list">section2</li>
+            </a>
+            <a href="#subheader2" style="text-decoration: none">
+              <li class="nav-list">section3</li>
+            </a>
+          </div>
+        </ul>
+      </div>
+
+      <div class="col-sm-10 col-md-8">
+        <section class="introduction">
+          <div class="format">
+            <article class="articleBody">
+              <h1 class="subheader" id="subheader">SubHeader</h1>
+              Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque
+              ante sollicitudin. Cras purus odio.Cras sit amet nibh libero, in gravida
+              nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio.Cras
+              sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
+              sollicitudin. Cras purus odio.Cras sit amet nibh libero, in gravida nulla.
+              Nulla vel metus scelerisque ante sollicitudin. Cras purus odio.Cras sit amet
+              nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
+              sollicitudin. Cras purus odio.Cras sit amet nibh libero, in gravida nulla.
+              Nulla vel metus scelerisque ante sollicitudin. Cras purus odio.Cras sit amet
+              nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
+              sollicitudin. Cras purus odio.Cras sit amet nibh libero, in gravida nulla.
+              Nulla vel metus scelerisque ante sollicitudin. Cras purus odio.
+            </article>
+            <article class="articleBody">
+              <h1 class="subheader" id="subheader1">SubHeader</h1>
+              Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque
+              ante sollicitudin. Cras purus odio.Cras sit amet nibh libero, in gravida
+              nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio.Cras
+              sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
+              sollicitudin. Cras purus odio.Cras sit amet nibh libero, in gravida nulla.
+              Nulla vel metus scelerisque ante sollicitudin. Cras purus odio.Cras sit amet
+              nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
+              sollicitudin. Cras purus odio.Cras sit amet nibh libero, in gravida nulla.
+              Nulla vel metus scelerisque ante sollicitudin. Cras purus odio.Cras sit amet
+              nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
+              sollicitudin. Cras purus odio.Cras sit amet nibh libero, in gravida nulla.
+              Nulla vel metus scelerisque ante sollicitudin. Cras purus odio.
+            </article>
+            <article class="articleBody">
+              <h1 class="subheader" id="subheader2">SubHeader</h1>
+              Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque
+              ante sollicitudin. Cras purus odio.Cras sit amet nibh libero, in gravida
+              nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio.Cras
+              sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
+              sollicitudin. Cras purus odio.Cras sit amet nibh libero, in gravida nulla.
+              Nulla vel metus scelerisque ante sollicitudin. Cras purus odio.Cras sit amet
+              nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
+              sollicitudin. Cras purus odio.Cras sit amet nibh libero, in gravida nulla.
+              Nulla vel metus scelerisque ante sollicitudin. Cras purus odio.Cras sit amet
+              nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
+              sollicitudin. Cras purus odio.Cras sit amet nibh libero, in gravida nulla.
+              Nulla vel metus scelerisque ante sollicitudin. Cras purus odio.
+            </article>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col"></div>
+      <div class="col-sm-10 col-md-8">
+        <section class="discussion">
+          <div class="discussionTitle">Discussions:</div>
+          <div class="breakLine"></div>
+          <div class="discussionContent">1111</div>
+          <div class="discussionContent">1111</div>
+          <input class="discussionContent" placeholder="Leave your comments here: " />
+        </section>
+      </div>
+      <div class="col"></div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "ArticleDisplay",
+};
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+.articleHeader {
+  font-size: 2rem;
+  text-align: center;
+  margin: 2rem 1rem;
+  padding: 10px 0;
+}
+
+.navbar-vertical {
+  display: flex;
+  padding: 10px 10px 20px 10px;
+  margin: auto;
+  flex-direction: column;
+  align-items: center;
+  list-style-type: circle;
+  list-style-position: inside;
+  width: 300px;
+  position: sticky;
+  top: 3rem;
+  z-index: 100;
+}
+
+.nav-wrapper {
+  width: 100%;
+  border: 2px solid rgba(44, 44, 46, 0.5);
+  border-radius: 10px;
+  background-color: rgba(171, 171, 238, 0.5);
+  box-shadow: 0 0 0px 3px rgba(59, 59, 65, 0.1);
+}
+
+.nav-wrapper:hover {
+  box-shadow: 0 0 5px 5px rgba(59, 59, 65, 0.3);
+  transition: 0.2s ease-in-out;
+}
+
+.nav-list {
+  padding: 5px 5rem;
+  width: 100%;
+  color: #303137;
+}
+
+.nav-list:hover {
+  transform: scale(1.1);
+  transition: 0.2s ease-in-out;
+}
+
+.overview {
+  list-style-type: none;
+  background-color: #303137;
+  color: #ffffff;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  padding: 5px 6rem;
+  width: 100%;
+}
+
+.articleBody {
+  width: 100%;
+  padding: 0 2rem 1rem 1rem;
+  text-align: justify;
+  line-height: 2rem;
+  font-size: 1.1rem;
+}
+
+.subheader {
+  font-size: 1.5rem;
+  text-decoration: underline;
+}
+
+.discussion {
+  width: auto;
+  margin: 3rem;
+  border: 2px dashed #303137;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 5px;
+}
+
+.discussionTitle {
+  font-size: 1.2rem;
+}
+
+.breakLine {
+  width: 100%;
+  border: #303137;
+}
+
+.discussionContent {
+  width: 100%;
+  padding: auto;
+  border-top: 2px solid #303137;
+}
+
+.content-footer {
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  height: 1.5rem;
+  margin-top: auto;
+  border-top: 2px solid rgba(44, 44, 46, 0.5);
+}
+</style>

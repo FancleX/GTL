@@ -1,5 +1,6 @@
 <template>
-  <div class="mainPage-content">
+  <div>
+  <div class="mainPage-content" v-if="!goArticle">
     <!-- welcome introduction -->
     <div class="welcome" id="aboutUs">
       <div class="row">
@@ -42,7 +43,7 @@
             </div>
             <div class="carousel-inner">
               <div class="carousel-item active">
-                <a href="#" @click="getImgUrl" id="imgDisplay">
+                <a href="#" @click="toggleContent">
                   <img
                     src="https://ichef.bbci.co.uk/news/999/cpsprodpb/15951/production/_117310488_16.jpg"
                     class="d-block img-fluid img-center"
@@ -50,7 +51,7 @@
                 /></a>
               </div>
               <div class="carousel-item">
-                <a href="#" @click="goContent">
+                <a href="#" @click="toggleContent">
                   <img
                     src="https://ichef.bbci.co.uk/news/999/cpsprodpb/15951/production/_117310488_16.jpg"
                     class="d-block img-fluid img-center"
@@ -58,7 +59,7 @@
                 /></a>
               </div>
               <div class="carousel-item">
-                <a href="#" @click="goContent">
+                <a href="#" @click="toggleContent">
                   <img
                     src="https://ichef.bbci.co.uk/news/999/cpsprodpb/15951/production/_117310488_16.jpg"
                     class="d-block img-fluid img-center"
@@ -90,11 +91,35 @@
       </div>
     </div>
   </div>
+
+  <div class="articlePicker" v-if="goArticle">
+    <ArticleDisplay />
+  </div>
+
+
+  </div>
+
 </template>
 
 <script>
+import ArticleDisplay from './ArticleDisplay.vue';
+
 export default {
   name: "MainPage",
+  props: [],
+  components: {
+    ArticleDisplay,
+  },
+  data() {
+    return {
+      goArticle: false,
+    }
+  },
+  methods: {
+    toggleContent() {
+      this.goArticle = true;
+    }
+  }
 };
 </script>
 
