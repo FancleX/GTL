@@ -1,4 +1,4 @@
-const app = new Vue({
+const pageConfig = new Vue({
     el: "#mainPage",
     data:{
         isHomePage: true,
@@ -20,6 +20,16 @@ const app = new Vue({
             this.isContentPage = true;
             this.isHomePage = false;
             this.isExplorePage = false;
+        },
+        getImgUrl:function(){
+            console.log(1)
+            axios.get('/api/article/explorer')
+            .then(response => {
+                console.log(response.data)
+            })
+            .catch(err => {
+
+            })
         }
     }
  })
