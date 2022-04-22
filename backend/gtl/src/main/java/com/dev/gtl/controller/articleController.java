@@ -6,6 +6,7 @@ import com.dev.gtl.model.article.Article;
 import com.dev.gtl.response.BaseResponse;
 import com.dev.gtl.service.ArticleService;
 
+import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -71,4 +73,11 @@ public class ArticleController {
     public BaseResponse<String> deleteComment(@PathVariable(value = "commentId") Long id) {
         return articleService.deleteComment(id);
     }
+
+    // get preview article (id, img, header, partial content)
+    @GetMapping("/preview")
+    public BaseResponse<JSONArray> getPreview() {
+        return articleService.getPreview();
+    }
+
 }

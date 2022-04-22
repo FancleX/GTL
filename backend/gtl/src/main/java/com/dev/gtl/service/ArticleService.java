@@ -1,6 +1,9 @@
 package com.dev.gtl.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import com.dev.gtl.model.article.Article;
@@ -10,7 +13,9 @@ import com.dev.gtl.repository.CommentRepository;
 import com.dev.gtl.response.BaseResponse;
 import com.dev.gtl.response.ResultStatus;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.modelmapper.ModelMapper;
@@ -134,5 +139,20 @@ public class ArticleService {
         }
         commentRepository.deleteById(id);
         return ResultStatus.success("comment deleted");
+    }
+
+    public BaseResponse<JSONArray> getPreview() {
+        List<Article> articles = articleRepository.findAll();
+        JSONArray arr = new JSONArray();
+        Map<String, String> jsonMap = new HashMap<>();    
+        for (Article article : articles) {
+            jsonMap.put("id", article.getId().toString());
+            jsonMap.put("imgAddress", article.getImgUrl());
+            jsonMap.put("header", article.getHeader());
+            jsonMap.put("paragraph", article.getParagraphs().toString());
+            JSONObject obj = new JSONObject(jsonMap);
+            arr.add(obj);
+        }
+        return ResultStatus.success(arr);
     }
 }

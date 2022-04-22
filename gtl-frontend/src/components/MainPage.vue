@@ -103,6 +103,7 @@
 
 <script>
 import ArticleDisplay from './ArticleDisplay.vue';
+import axios from "axios";
 
 export default {
   name: "MainPage",
@@ -115,9 +116,21 @@ export default {
       goArticle: false,
     }
   },
+  created() {
+    this.fetchRecommendations();
+  },
   methods: {
     toggleContent() {
       this.goArticle = true;
+    },
+    fetchRecommendations() {
+      axios.get("api/article/preview")
+      .then(response => {
+        console.log(response)
+      })
+      .catch(error => {
+        console.log(error)
+      })
     }
   }
 };
