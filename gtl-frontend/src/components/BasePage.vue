@@ -40,7 +40,7 @@
           <form class="d-flex">
             <!-- <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"> -->
             <!-- <img src="../assets/logo.png" alt="user-profileImg" class="user-profileImg"> -->
-            <button class="btn btn-outline-success" type="submit" @click="toggleLogin">
+            <button class="btn btn-outline-success" type="button" @click="toggleLogin">
               Login
             </button>
           </form>
@@ -48,7 +48,7 @@
       </div>
     </nav>
 
-    <PageController :home="goHome" :explorer="goExplorer" :aboutUs="goAboutUs"/>
+    <PageController :home="goHome" :explorer="goExplorer" :aboutUs="goAboutUs" :login="goLogin"/>
 
     <!-- Footer -->
     <footer class="page-footer font-small">
@@ -104,21 +104,18 @@ export default {
       this.goAboutUs = false;
       this.goExplorer = false;
       this.goLogin = false;
-
     },
     toggleExplorer() {
       this.goHome = false;
       this.goAboutUs = false;
       this.goExplorer = true;
       this.goLogin = false;
-
     },
     toggleLogin() {
       this.goHome = false;
       this.goAboutUs = false;
       this.goExplorer = false;
       this.goLogin = true;
-
     },
   },
 };

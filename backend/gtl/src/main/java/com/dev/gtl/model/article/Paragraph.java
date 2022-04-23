@@ -28,6 +28,6 @@ public class Paragraph {
     @Column(name = "subHeader")
     private String subHeader;
 
-    @Column(name = "content")
+    @Column(name = "content", columnDefinition="text")
     private String content;
 }

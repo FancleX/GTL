@@ -82,6 +82,37 @@
             </article>
           </div>
         </section>
+
+        <!-- questions -->
+        <div class="row articleBody">
+          <div class="col-sm-10 col-md-8">
+            <h1 class="subheader">Exercise</h1>
+            <ol>
+              <li>
+                <p>Choose your favorite Web language:</p>
+                <form>
+                    <input type="radio" name="fav_language" value="A" /> <label class="option" for="A">A</label>
+                    <input type="radio" name="fav_language" value="B" /> <label class="option" for="B">B</label>
+                    <input type="radio" name="fav_language" value="C" /> <label class="option" for="C">C</label>
+                    <input type="radio" name="fav_language" value="D" /> <label class="option" for="D">D</label>
+                    <button type="button" class="showAnswer" @click="toggleAnswer">Show answer & explaination</button>
+                </form>
+                <p v-if="showAnswer"> explaination here </p>
+              </li>
+              <li>
+                <p>Choose your favorite Web language:</p>
+                <form>
+                    <input type="radio" name="fav_language" value="A" /> <label class="option" for="A">A</label>
+                    <input type="radio" name="fav_language" value="B" /> <label class="option" for="B">B</label>
+                    <input type="radio" name="fav_language" value="C" /> <label class="option" for="C">C</label>
+                    <input type="radio" name="fav_language" value="D" /> <label class="option" for="D">D</label>
+                    <button type="button" class="showAnswer" @click="toggleAnswer">Show answer & explaination</button>
+                </form>
+                <p v-if="showAnswer"> explaination here </p>
+              </li>
+            </ol>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -102,8 +133,41 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: "ArticleDisplay",
+  props: ['articleToDisplay'],
+  data() {
+    return {
+      showAnswer: false,
+      articleId: null,
+    }
+  },
+  created() {
+    this.init();
+  },
+  methods: {
+    toggleAnswer() {
+      this.showAnswer = true;
+    },
+    init() {
+      this.articleId = this.articleToDisplay;
+      console.log(this.articleId);
+      this.fetchArticle();
+    },
+    async fetchArticle() {
+      await axios.get("api/article/search/" + this.articleId)
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        alert(error);
+      })
+    },
+
+
+  }
 };
 </script>
 
@@ -177,6 +241,19 @@ export default {
   text-decoration: underline;
 }
 
+.option {
+  padding-right: 2rem;
+}
+
+.showAnswer {
+  padding: 5px;
+  border-radius: 10px;
+}
+
+.showAnswer:active {
+    box-shadow: 0 0 0 0.1rem rgba(0, 0, 0, 0.5);
+}
+
 .discussion {
   width: auto;
   margin: 3rem;
@@ -198,14 +275,5 @@ export default {
   width: 100%;
   padding: auto;
   border-top: 2px solid #303137;
-}
-
-.content-footer {
-  position: relative;
-  bottom: 0;
-  width: 100%;
-  height: 1.5rem;
-  margin-top: auto;
-  border-top: 2px solid rgba(44, 44, 46, 0.5);
 }
 </style>

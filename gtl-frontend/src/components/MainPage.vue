@@ -43,25 +43,25 @@
             </div>
             <div class="carousel-inner">
               <div class="carousel-item active">
-                <a href="#" @click="toggleContent">
+                <a href="#" @click="toggleContent(articleIds[0])">
                   <img
-                    src="https://ichef.bbci.co.uk/news/999/cpsprodpb/15951/production/_117310488_16.jpg"
+                    :src= "imgUrls[0]"
                     class="d-block img-fluid img-center"
                     alt="first slide"
                 /></a>
               </div>
               <div class="carousel-item">
-                <a href="#" @click="toggleContent">
+                <a href="#" @click="toggleContent(articleIds[1])">
                   <img
-                    src="https://ichef.bbci.co.uk/news/999/cpsprodpb/15951/production/_117310488_16.jpg"
+                    :src="imgUrls[1]"
                     class="d-block img-fluid img-center"
                     alt="second slide"
                 /></a>
               </div>
               <div class="carousel-item">
-                <a href="#" @click="toggleContent">
+                <a href="#" @click="toggleContent(articleIds[2])">
                   <img
-                    src="https://ichef.bbci.co.uk/news/999/cpsprodpb/15951/production/_117310488_16.jpg"
+                    :src="imgUrls[2]"
                     class="d-block img-fluid img-center"
                     alt="thrid slide"
                 /></a>
@@ -93,10 +93,8 @@
   </div>
 
   <div class="articlePicker" v-if="goArticle">
-    <ArticleDisplay />
+    <ArticleDisplay :articleToDisplay="articlePicked" />
   </div>
-
-
   </div>
 
 </template>
@@ -114,26 +112,43 @@ export default {
   data() {
     return {
       goArticle: false,
+      articleIds: [],
+      imgUrls: [],
+      articlePicked: "",
     }
   },
   created() {
     this.fetchRecommendations();
   },
   methods: {
-    toggleContent() {
+    toggleContent(articleId) {
       this.goArticle = true;
+      this.articlePicked = articleId;
+      // console.log(this.articlePicked);
     },
     fetchRecommendations() {
       axios.get("api/article/preview")
       .then(response => {
-        console.log(response)
+        let articleId;
+        let url = "";
+        // console.log(response);
+        for (let i = 0; i < 3; i++) {
+          articleId = response.data.data[i].id;
+          url = response.data.data[i].imgAddress;
+          // get three ids and three imgurls
+          this.articleIds.push(articleId);
+          this.imgUrls.push(url);
+        }
+        // console.log(this.articleIds);
+        // console.log(this.imgUrls);
       })
       .catch(error => {
-        console.log(error)
+        alert(error);
       })
-    }
+    },
   }
 };
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -164,6 +179,8 @@ export default {
 
 .img-center {
     display: block;
-    margin: auto;
+    margin: auto; 
+    width: 100%;
+    height: 400px;
 }
 </style>

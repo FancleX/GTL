@@ -46,9 +46,8 @@ public class User {
     @JoinColumn(name = "user_comments")
     private List<Comment> comments;
 
-    // public User(Account account, List<Article> bookMarks) {
+    // public User(Account account) {
     //     this.account = account;
-    //     this.bookMarks = bookMarks;
     // }
 
 }
