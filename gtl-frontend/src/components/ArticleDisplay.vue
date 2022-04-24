@@ -5,7 +5,7 @@
       <div class="col-sm-12 col-md-10">
         <div class="row">
           <div class="header">
-            <header class="articleHeader">Explaination of Set</header>
+            <header class="articleHeader">{{ header }}</header>
           </div>
         </div>
       </div>
@@ -19,14 +19,8 @@
             <a href="#articleHeader" style="text-decoration: none">
               <li class="overview">Overview</li>
             </a>
-            <a href="#subheader" style="text-decoration: none">
-              <li class="nav-list">section1</li>
-            </a>
-            <a href="#subheader1" style="text-decoration: none">
-              <li class="nav-list">section2</li>
-            </a>
-            <a href="#subheader2" style="text-decoration: none">
-              <li class="nav-list">section3</li>
+            <a href="#subheader" @click="navigator()" style="text-decoration: none" v-for="item in paragraphs" :key="item">
+              <li class="nav-list">{{ (item.subHeader || "").substring(0, 6) + "..." }}</li>
             </a>
           </div>
         </ul>
@@ -35,80 +29,34 @@
       <div class="col-sm-10 col-md-8">
         <section class="introduction">
           <div class="format">
-            <article class="articleBody">
-              <h1 class="subheader" id="subheader">SubHeader</h1>
-              Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque
-              ante sollicitudin. Cras purus odio.Cras sit amet nibh libero, in gravida
-              nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio.Cras
-              sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-              sollicitudin. Cras purus odio.Cras sit amet nibh libero, in gravida nulla.
-              Nulla vel metus scelerisque ante sollicitudin. Cras purus odio.Cras sit amet
-              nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-              sollicitudin. Cras purus odio.Cras sit amet nibh libero, in gravida nulla.
-              Nulla vel metus scelerisque ante sollicitudin. Cras purus odio.Cras sit amet
-              nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-              sollicitudin. Cras purus odio.Cras sit amet nibh libero, in gravida nulla.
-              Nulla vel metus scelerisque ante sollicitudin. Cras purus odio.
-            </article>
-            <article class="articleBody">
-              <h1 class="subheader" id="subheader1">SubHeader</h1>
-              Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque
-              ante sollicitudin. Cras purus odio.Cras sit amet nibh libero, in gravida
-              nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio.Cras
-              sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-              sollicitudin. Cras purus odio.Cras sit amet nibh libero, in gravida nulla.
-              Nulla vel metus scelerisque ante sollicitudin. Cras purus odio.Cras sit amet
-              nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-              sollicitudin. Cras purus odio.Cras sit amet nibh libero, in gravida nulla.
-              Nulla vel metus scelerisque ante sollicitudin. Cras purus odio.Cras sit amet
-              nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-              sollicitudin. Cras purus odio.Cras sit amet nibh libero, in gravida nulla.
-              Nulla vel metus scelerisque ante sollicitudin. Cras purus odio.
-            </article>
-            <article class="articleBody">
-              <h1 class="subheader" id="subheader2">SubHeader</h1>
-              Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque
-              ante sollicitudin. Cras purus odio.Cras sit amet nibh libero, in gravida
-              nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio.Cras
-              sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-              sollicitudin. Cras purus odio.Cras sit amet nibh libero, in gravida nulla.
-              Nulla vel metus scelerisque ante sollicitudin. Cras purus odio.Cras sit amet
-              nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-              sollicitudin. Cras purus odio.Cras sit amet nibh libero, in gravida nulla.
-              Nulla vel metus scelerisque ante sollicitudin. Cras purus odio.Cras sit amet
-              nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-              sollicitudin. Cras purus odio.Cras sit amet nibh libero, in gravida nulla.
-              Nulla vel metus scelerisque ante sollicitudin. Cras purus odio.
+            <article class="articleBody" v-for="item in paragraphs" :key="item">
+              <h1 class="subheader" id="subheader" >{{ item.subHeader }}</h1>
+              {{ item.content }}
             </article>
           </div>
         </section>
 
         <!-- questions -->
         <div class="row articleBody">
-          <div class="col-sm-10 col-md-8">
+          <div class="col-sm-10 col-md-10">
             <h1 class="subheader">Exercise</h1>
             <ol>
-              <li>
-                <p>Choose your favorite Web language:</p>
+              <li v-for="item in questions" :key="item">
+                <p>{{ item.description }}</p>
                 <form>
-                    <input type="radio" name="fav_language" value="A" /> <label class="option" for="A">A</label>
-                    <input type="radio" name="fav_language" value="B" /> <label class="option" for="B">B</label>
-                    <input type="radio" name="fav_language" value="C" /> <label class="option" for="C">C</label>
-                    <input type="radio" name="fav_language" value="D" /> <label class="option" for="D">D</label>
-                    <button type="button" class="showAnswer" @click="toggleAnswer">Show answer & explaination</button>
+                  <input type="radio" name="fav_language" value="A" />
+                  <label class="option" for="A">A</label>
+                  <input type="radio" name="fav_language" value="B" />
+                  <label class="option" for="B">B</label>
+                  <input type="radio" name="fav_language" value="C" />
+                  <label class="option" for="C">C</label>
+                  <input type="radio" name="fav_language" value="D" />
+                  <label class="option" for="D">D</label>
+                  <button type="button" class="showAnswer" @click="toggleAnswer">
+                    Show answer & explaination
+                  </button>
                 </form>
-                <p v-if="showAnswer"> explaination here </p>
-              </li>
-              <li>
-                <p>Choose your favorite Web language:</p>
-                <form>
-                    <input type="radio" name="fav_language" value="A" /> <label class="option" for="A">A</label>
-                    <input type="radio" name="fav_language" value="B" /> <label class="option" for="B">B</label>
-                    <input type="radio" name="fav_language" value="C" /> <label class="option" for="C">C</label>
-                    <input type="radio" name="fav_language" value="D" /> <label class="option" for="D">D</label>
-                    <button type="button" class="showAnswer" @click="toggleAnswer">Show answer & explaination</button>
-                </form>
-                <p v-if="showAnswer"> explaination here </p>
+                <p v-if="showAnswer">{{ item.explaination }}</p>
               </li>
             </ol>
           </div>
@@ -122,8 +70,10 @@
         <section class="discussion">
           <div class="discussionTitle">Discussions:</div>
           <div class="breakLine"></div>
-          <div class="discussionContent">1111</div>
-          <div class="discussionContent">1111</div>
+          <div class="discussionContent" v-for="(item, index) in comments" :key="item">
+            <label> {{ commentMakerNames[index] }}: </label>
+            {{ item.message }}
+          </div>
           <input class="discussionContent" placeholder="Leave your comments here: " />
         </section>
       </div>
@@ -133,11 +83,11 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 
 export default {
   name: "ArticleDisplay",
-  props: ['articleToDisplay'],
+  props: ["articleToDisplay"],
   data() {
     return {
       showAnswer: false,
@@ -146,7 +96,9 @@ export default {
       paragraphs: [],
       questions: [],
       comments: [],
-    }
+      commentMakerIds: [],
+      commentMakerNames: [],
+    };
   },
   created() {
     this.init();
@@ -157,29 +109,58 @@ export default {
     },
     init() {
       this.articleId = this.articleToDisplay;
-      console.log(this.articleId);
+      // console.log(this.articleId);
       this.fetchArticle();
+      this.fetchCommentMakerId();
+      // this.getCommentMaker();
     },
-    fetchArticle() {
-      axios.get("api/article/search/" + this.articleId)
-      .then(response => {
-        // console.log(response);
-        this.header = response.data.data.header;
-        this.paragraphs = response.data.data.paragraphs;
-        this.questions = response.data.data.questions;
-        this.comments = response.data.data.comments;
-        console.log(this.header);
-        console.log(this.paragraphs);
-        console.log(this.questions);
-        console.log(this.comments);
-      })
-      .catch(error => {
-        alert(error);
-      })
+    async fetchArticle() {
+      await axios
+        .get("api/article/search/" + this.articleId)
+        .then((response) => {
+          // console.log(response);
+          this.header = response.data.data.header;
+          this.paragraphs = response.data.data.paragraphs;
+          this.questions = response.data.data.questions;
+          this.comments = response.data.data.comments;
+          // console.log(this.header);
+          // console.log(this.paragraphs);
+          // console.log(this.questions);
+          // console.log(this.comments);
+        })
+        .catch((error) => {
+          alert(error);
+        });
     },
-
-
-  }
+    async fetchCommentMakerId() {
+      await axios
+        .get("api/article/getCommentMaker/" + this.articleId)
+        .then((response) => {
+          // console.log(response);
+          this.commentMakerIds = response.data.data
+          // console.log(self.commentMakerIds);
+          this.getCommentMaker(this.commentMakerIds);
+        })
+        .catch((error) => {
+          alert.error(error);
+        });
+    },
+    async getCommentMaker(ids) {
+      // console.log(ids);
+      await axios
+        .post("api/user/getNames", {
+          userIds: ids
+        })
+        .then((response) => {
+          // console.log(response);
+          this.commentMakerNames = response.data.data;
+          // console.log(this.commentMakerNames)
+        })
+        .catch((error) => {
+          alert(error);
+        });
+    },
+  },
 };
 </script>
 
@@ -254,6 +235,7 @@ export default {
 }
 
 .option {
+  padding-left: 5px;
   padding-right: 2rem;
 }
 
@@ -263,7 +245,7 @@ export default {
 }
 
 .showAnswer:active {
-    box-shadow: 0 0 0 0.1rem rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 0 0.1rem rgba(0, 0, 0, 0.5);
 }
 
 .discussion {
@@ -276,6 +258,7 @@ export default {
 
 .discussionTitle {
   font-size: 1.2rem;
+  padding-left: 0.3rem;
 }
 
 .breakLine {
@@ -285,7 +268,7 @@ export default {
 
 .discussionContent {
   width: 100%;
-  padding: auto;
+  padding-left: 0.3rem;
   border-top: 2px solid #303137;
 }
 </style>

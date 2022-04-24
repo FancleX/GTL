@@ -66,4 +66,9 @@ public class UserController {
         return userService.getComments(userId);
     }
 
+    // JSON format {"userIds": []}
+    @PostMapping("/getNames")
+    public BaseResponse<List<String>> getNames(@RequestBody String ids){
+        return userService.getNames(ids);
+    }
 }

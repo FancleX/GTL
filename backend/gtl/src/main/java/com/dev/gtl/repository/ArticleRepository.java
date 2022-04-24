@@ -1,5 +1,7 @@
 package com.dev.gtl.repository;
 
+import java.util.List;
+
 import com.dev.gtl.model.article.Article;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,6 +19,7 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     @Query(value = "UPDATE article_comment SET user_comments = :userId WHERE id = :commentId", nativeQuery = true)
     void CommentCreatedBy(@Param("userId") Long userId, @Param("commentId") Long commentId);
 
-
+    @Query(value = "SELECT user_comments FROM article_comment WHERE article_id = :articleId", nativeQuery = true)
+    List<Long> getCommentMaker(@Param("articleId") Long articleId);
 
 }

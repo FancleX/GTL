@@ -1,5 +1,6 @@
 package com.dev.gtl.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -13,6 +14,7 @@ import com.dev.gtl.repository.UserRepository;
 import com.dev.gtl.response.BaseResponse;
 import com.dev.gtl.response.ResultStatus;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -25,13 +27,13 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final AccountRepository accountRepository;
-    
+
     @Autowired
     public UserService(UserRepository userRepository, AccountRepository accountRepository) {
         this.userRepository = userRepository;
         this.accountRepository = accountRepository;
     }
-    
+
     public BaseResponse<User> getUserById(Long id) {
         // check if the user exists
         if (!userRepository.existsById(id)) {
@@ -70,7 +72,7 @@ public class UserService {
         String[] ls = data.split("&");
         email = ls[0].split("=")[1];
         password = ls[1].split("=")[1];
-        password = password.substring(0, password.length()-4);
+        password = password.substring(0, password.length() - 4);
         Optional<Account> account = accountRepository.findByEmail(email);
         if (!account.isPresent()) {
             return ResultStatus.fail("the user is not in the database");
@@ -109,6 +111,29 @@ public class UserService {
             return ResultStatus.success(user.getComments());
         } catch (NoSuchElementException e) {
             return ResultStatus.fail("the user doesn't exist");
+        }
+    }
+
+    public BaseResponse<List<String>> getNames(String ids){
+        try {
+            Object obj = new JSONParser().parse(ids);
+            System.out.println("failed");
+            JSONObject jo = (JSONObject) obj;
+            JSONArray arr = new JSONArray();
+            arr = (JSONArray) jo.get("userIds");
+            // cover json array to list<Long>
+            List<Long> userIds = new ArrayList<>();
+            for (int i = 0; i < arr.size(); i++) {
+                userIds.add(Long.parseLong(arr.get(i).toString()));
+            }
+            // fetch user name from ids
+            List<String> data = new ArrayList<>();
+            for (int i = 0; i < userIds.size(); i++) {
+                data.add(userRepository.getUserName(userIds.get(i)));
+            }
+            return ResultStatus.success(data);
+        } catch (ParseException e) {
+            return null;
         }
     }
 }

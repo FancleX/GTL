@@ -126,8 +126,8 @@ export default {
       this.articlePicked = articleId;
       // console.log(this.articlePicked);
     },
-    fetchRecommendations() {
-      axios.get("api/article/preview")
+    async fetchRecommendations() {
+      await axios.get("api/article/preview")
       .then(response => {
         let articleId;
         let url = "";

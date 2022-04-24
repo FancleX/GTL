@@ -79,4 +79,10 @@ public class ArticleController {
         return articleService.getPreview();
     }
 
+    // get user id that who made this comment
+    @GetMapping("/getCommentMaker/{articleId}")
+    public BaseResponse<List<Long>> getCommentMaker(@PathVariable(value = "articleId") Long articleId) {
+        return articleService.getCommentMaker(articleId);
+    }
+
 }

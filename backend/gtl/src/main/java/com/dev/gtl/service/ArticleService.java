@@ -1,6 +1,5 @@
 package com.dev.gtl.service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +14,6 @@ import com.dev.gtl.response.ResultStatus;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.modelmapper.ModelMapper;
@@ -154,5 +152,10 @@ public class ArticleService {
             arr.add(obj);
         }
         return ResultStatus.success(arr);
+    }
+
+    public BaseResponse<List<Long>> getCommentMaker(Long articleId) {
+        List<Long> userIds = articleRepository.getCommentMaker(articleId);
+        return ResultStatus.success(userIds);
     }
 }
