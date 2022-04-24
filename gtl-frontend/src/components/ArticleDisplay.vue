@@ -142,6 +142,10 @@ export default {
     return {
       showAnswer: false,
       articleId: null,
+      header: "",
+      paragraphs: [],
+      questions: [],
+      comments: [],
     }
   },
   created() {
@@ -156,10 +160,18 @@ export default {
       console.log(this.articleId);
       this.fetchArticle();
     },
-    async fetchArticle() {
-      await axios.get("api/article/search/" + this.articleId)
+    fetchArticle() {
+      axios.get("api/article/search/" + this.articleId)
       .then(response => {
-        console.log(response);
+        // console.log(response);
+        this.header = response.data.data.header;
+        this.paragraphs = response.data.data.paragraphs;
+        this.questions = response.data.data.questions;
+        this.comments = response.data.data.comments;
+        console.log(this.header);
+        console.log(this.paragraphs);
+        console.log(this.questions);
+        console.log(this.comments);
       })
       .catch(error => {
         alert(error);
