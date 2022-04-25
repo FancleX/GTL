@@ -1,6 +1,9 @@
 <template>
-  <div class="container">
-    <form class="form" :id="login">
+    <div class="row login">
+      <div class="col"> </div>
+
+  <div class="container col-sm-12 col-md-8">
+      <form class="form" :id="login">
       <h1 class="title">Login</h1>
       <div class="message message-error"></div>
       <div class="input-group">
@@ -70,6 +73,10 @@
       </p>
     </form>
   </div>
+
+  <div class="col"> </div>
+
+  </div>
 </template>
 
 <script>
@@ -91,13 +98,17 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.container {
+.login {
   --color-primary: #009579;
   --color-primary-dark: #007f67;
   --color-secondary: #252c6a;
   --color-error: #cc3333;
   --color-success: #4bb544;
 
+  
+  }
+
+.container {
   margin: 0;
   height: 100vh;
   display: flex;
@@ -118,6 +129,8 @@ export default {
   border-radius: 10px;
   background: #ffffff;
 }
+
+
 
 .container,
 .input,

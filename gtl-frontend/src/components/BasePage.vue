@@ -57,7 +57,7 @@
           <!-- Copyright -->
           <div class="footer-copyright py-4 col-sm-12 col-lg-3">
             © 2022 Copyright:
-            <a href="#"> GetToLearn.com</a>
+            <a href="index.html"> GetToLearn.com</a>
           </div>
           <div class="col-sm-12 col-lg-9 socialWrapper">
             <a href="https://facebook.com" target="_blank">
@@ -165,7 +165,6 @@ img.user-profileImg {
 }
 
 .nav-item:hover {
-  transform: scale(1.3);
   font: bold;
 }
 
