@@ -6,43 +6,28 @@
           <h1 class="header">Featured Sections</h1>
         </div>
         <div class="content-wrapper">
-          <a href="#" class="linkTag" @click="toggleContent">
+          <a href="#" class="linkTag" @click="toggleContent(data.id)" v-for="data in dataArr" :key="data">
             <div class="content-object">
               <div class="content-box">
-                <img :src="imgSrc" class="img" />
+                <img :src="data.imgAddress" class="img" />
               </div>
-              <h2 class="content-header">{{ title }}</h2>
-              <div class="content-text">{{ content }}</div>
+              <h2 class="content-header">{{ data.header.substring(0, 7) + "..." }}</h2>
+              <div class="content-text">{{ data.paragraph[0].content.substring(0, 40) + "..." }}</div>
             </div>
           </a>
-          <div class="content-object">
-            <div class="content-box"></div>
-            <h2 class="content-header">Project</h2>
-            <div class="content-text">
-              Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque
-              ante sollicitudin. Cras purus odio.
-            </div>
-          </div>
-          <div class="content-object">
-            <div class="content-box"></div>
-            <h2 class="content-header">Project</h2>
-            <div class="content-text">
-              Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque
-              ante sollicitudin. Cras purus odio.
-            </div>
-          </div>
         </div>
       </div>
     </section>
 
     <div class="articlePicker" v-if="goArticle">
-      <ArticleDisplay />
+      <ArticleDisplay :articleToDisplay="articlePicked" />
     </div>
   </div>
 </template>
 
 <script>
 import ArticleDisplay from "./ArticleDisplay.vue";
+import axios from "axios";
 
 export default {
   name: "ContentExplorer",
@@ -51,18 +36,30 @@ export default {
   },
   data() {
     return {
-      title: "Project",
-      content:
-        "Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Craspurus odio.",
-      imgSrc:
-        "https://ichef.bbci.co.uk/news/999/cpsprodpb/15951/production/_117310488_16.jpg",
       goArticle: false,
+      articlePicked: "",
+      dataArr: [],
     };
   },
+  created() {
+    this.fetchArticles();
+  },
   methods: {
-    toggleContent() {
+    toggleContent(articleId) {
       this.goArticle = true;
+      this.articlePicked = articleId;
     },
+    async fetchArticles() {
+      await axios.get("api/article/preview")
+      .then(response => {
+        this.dataArr = response.data.data;
+        // console.log(this.dataArr)
+      })
+      .catch(error => {
+        alert(error);
+      })
+    },
+
   },
 };
 </script>

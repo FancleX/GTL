@@ -5,7 +5,7 @@
       <div class="col-sm-12 col-md-10">
         <div class="row">
           <div class="header">
-            <header class="articleHeader">{{ header }}</header>
+            <header class="articleHeader" id="articleHeader">{{ header }}</header>
           </div>
         </div>
       </div>
@@ -19,7 +19,7 @@
             <a href="#articleHeader" style="text-decoration: none">
               <li class="overview">Overview</li>
             </a>
-            <a href="#subheader" @click="navigator()" style="text-decoration: none" v-for="item in paragraphs" :key="item">
+            <a :href="jumpingTarget" @click="jumpingTo(index)" style="text-decoration: none" v-for="(item, index) in paragraphs" :key="item">
               <li class="nav-list">{{ (item.subHeader || "").substring(0, 6) + "..." }}</li>
             </a>
           </div>
@@ -29,8 +29,8 @@
       <div class="col-sm-10 col-md-8">
         <section class="introduction">
           <div class="format">
-            <article class="articleBody" v-for="item in paragraphs" :key="item">
-              <h1 class="subheader" id="subheader" >{{ item.subHeader }}</h1>
+            <article class="articleBody" v-for="(item, index) in paragraphs" :key="item">
+              <h1 class="subheader" :id="index" >{{ item.subHeader }}</h1>
               {{ item.content }}
             </article>
           </div>
@@ -41,22 +41,23 @@
           <div class="col-sm-10 col-md-10">
             <h1 class="subheader">Exercise</h1>
             <ol>
-              <li v-for="item in questions" :key="item">
+              <li v-for="(item, index) in questions" :key="item" :id="currentQuestion">
                 <p>{{ item.description }}</p>
                 <form>
-                  <input type="radio" name="fav_language" value="A" />
-                  <label class="option" for="A">A</label>
-                  <input type="radio" name="fav_language" value="B" />
-                  <label class="option" for="B">B</label>
-                  <input type="radio" name="fav_language" value="C" />
-                  <label class="option" for="C">C</label>
-                  <input type="radio" name="fav_language" value="D" />
-                  <label class="option" for="D">D</label>
+                  <input type="radio" name="fav_language" @click="checkAnswer('A', item.answer, index)" />
+                  <label class="option">A</label>
+                  <input type="radio" name="fav_language" @click="checkAnswer('B', item.answer, index)" />
+                  <label class="option">B</label>
+                  <input type="radio" name="fav_language" @click="checkAnswer('C', item.answer, index)" />
+                  <label class="option">C</label>
+                  <input type="radio" name="fav_language" @click="checkAnswer('D', item.answer, index)" />
+                  <label class="option">D</label>
+                  <label class="option" v-show="currentQuestion === index"> {{ indicator }} </label>
                   <button type="button" class="showAnswer" @click="toggleAnswer">
                     Show answer & explaination
                   </button>
                 </form>
-                <p v-if="showAnswer">{{ item.explaination }}</p>
+                <p v-if="showAnswer && (currentQuestion === index)">{{ item.explaination }}</p>
               </li>
             </ol>
           </div>
@@ -98,6 +99,9 @@ export default {
       comments: [],
       commentMakerIds: [],
       commentMakerNames: [],
+      jumpingTarget: "",
+      indicator: "",
+      currentQuestion: null,
     };
   },
   created() {
@@ -160,6 +164,27 @@ export default {
           alert(error);
         });
     },
+    jumpingTo(index) {
+    this.jumpingTarget = "#";
+    this.jumpingTarget += index;
+    // console.log(this.jumpingTarget)
+  },
+  checkAnswer(pickedAnswer, answer, index) {
+    // console.log(pickedAnswer);
+    // console.log(answer)
+    this.currentQuestion = index;
+    this.showAnswer = false;
+    // this.questionId = "#Q";
+    // this.questionId += index;
+    // console.log(this.questionId);
+    if (pickedAnswer === answer){
+      // console.log(true);
+      this.indicator = "Correct!";
+    } else {
+      this.indicator = "Wrong!";
+    }
+  }
+
   },
 };
 </script>

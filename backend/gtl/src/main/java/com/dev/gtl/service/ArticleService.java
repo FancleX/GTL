@@ -142,12 +142,12 @@ public class ArticleService {
     public BaseResponse<JSONArray> getPreview() {
         List<Article> articles = articleRepository.findAll();
         JSONArray arr = new JSONArray();
-        Map<String, String> jsonMap = new HashMap<>();    
+        Map<String, Object> jsonMap = new HashMap<>();    
         for (Article article : articles) {
-            jsonMap.put("id", article.getId().toString());
+            jsonMap.put("id", article.getId());
             jsonMap.put("imgAddress", article.getImgUrl());
             jsonMap.put("header", article.getHeader());
-            jsonMap.put("paragraph", article.getParagraphs().toString());
+            jsonMap.put("paragraph", article.getParagraphs());
             JSONObject obj = new JSONObject(jsonMap);
             arr.add(obj);
         }
