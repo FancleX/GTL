@@ -1,7 +1,5 @@
 /* eslint-disable */
 
-var $ = require('jquery')
-
 const loginForm = document.querySelector("#login");
 const createAccountForm = document.querySelector("#createAccount");
 

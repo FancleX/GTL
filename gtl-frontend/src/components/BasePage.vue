@@ -48,7 +48,9 @@
       </div>
     </nav>
 
-    <PageController :home="goHome" :explorer="goExplorer" :aboutUs="goAboutUs" :login="goLogin"/>
+    <div class="container dynamic">
+      <PageController :home="goHome" :explorer="goExplorer" :aboutUs="goAboutUs" :login="goLogin"/>
+    </div>
 
     <!-- Footer -->
     <footer class="page-footer font-small">
@@ -168,12 +170,18 @@ img.user-profileImg {
   font: bold;
 }
 
+.dynamic {
+  min-height: 75vh;
+  margin-top: 3rem;
+  width: 100%;
+}
+
 footer.page-footer {
   position: relative;
   bottom: 0;
   width: 100%;
   height: 1.5rem;
-  margin-top: auto;
+  /* margin-top: auto; */
   border-top: 2px solid rgba(44, 44, 46, 0.5);
 }
 

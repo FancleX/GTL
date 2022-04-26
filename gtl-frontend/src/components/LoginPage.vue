@@ -1,81 +1,76 @@
 <template>
-    <div class="row login">
-      <div class="col"> </div>
-
-  <div class="container col-sm-12 col-md-8">
+  <div class="wrapper">
+    <div class="container">
       <form class="form" :id="login">
-      <h1 class="title">Login</h1>
-      <div class="message message-error"></div>
-      <div class="input-group">
-        <input type="text" class="input" autofocus placeholder="Email" />
-        <div class="input-error-message"></div>
-      </div>
-      <div class="input-group">
-        <input type="password" class="input" autofocus placeholder="Password" />
-        <div class="input-error-message"></div>
-      </div>
-      <button class="button" type="submit">Continue</button>
-      <p class="text">
-        <a href="#" class="link">Forgot your password?</a>
-      </p>
-      <p class="text">
-        <a class="link" href="./" id="linkCreateAccount"
-          >Don't have an account? Sign Up Here</a
-        >
-      </p>
-    </form>
-    <form class="form form-hidden" id="createAccount">
-      <h1 class="title">Create Account</h1>
-      <div class="message message-error"></div>
-      <div class="input-group">
-        <input
-          type="text"
-          id="signupUsername"
-          class="input"
-          autofocus
-          placeholder="Username"
-        />
-        <div class="input-error-message"></div>
-      </div>
-      <div class="input-group">
-        <input
-          type="text"
-          id="signupEmail"
-          class="input"
-          autofocus
-          placeholder="Email Address"
-        />
-        <div class="input-error-message"></div>
-      </div>
-      <div class="input-group">
-        <input
-          type="password"
-          id="signupPassword"
-          class="input"
-          autofocus
-          placeholder="Password"
-        />
-        <div class="input-error-message"></div>
-      </div>
-      <div class="input-group">
-        <input
-          type="password"
-          id="signupPasswordConfirm"
-          class="input"
-          autofocus
-          placeholder="Confirm password"
-        />
-        <div class="input-error-message"></div>
-      </div>
-      <button class="button" type="submit">Continue</button>
-      <p class="text">
-        <a class="link" href="" id="linkLogin">Already have an account? Login</a>
-      </p>
-    </form>
-  </div>
-
-  <div class="col"> </div>
-
+        <h1 class="title">Login</h1>
+        <div class="message message-error"></div>
+        <div class="input-group">
+          <input type="text" class="input" autofocus placeholder="Email" />
+          <div class="input-error-message"></div>
+        </div>
+        <div class="input-group">
+          <input type="password" class="input" autofocus placeholder="Password" />
+          <div class="input-error-message"></div>
+        </div>
+        <button class="button" type="submit">Continue</button>
+        <p class="text">
+          <a href="#" class="link">Forgot your password?</a>
+        </p>
+        <p class="text">
+          <a class="link" href="./" id="linkCreateAccount"
+            >Don't have an account? Sign Up Here</a
+          >
+        </p>
+      </form>
+      <form class="form form-hidden" id="createAccount">
+        <h1 class="title">Create Account</h1>
+        <div class="message message-error"></div>
+        <div class="input-group">
+          <input
+            type="text"
+            id="signupUsername"
+            class="input"
+            autofocus
+            placeholder="Username"
+          />
+          <div class="input-error-message"></div>
+        </div>
+        <div class="input-group">
+          <input
+            type="text"
+            id="signupEmail"
+            class="input"
+            autofocus
+            placeholder="Email Address"
+          />
+          <div class="input-error-message"></div>
+        </div>
+        <div class="input-group">
+          <input
+            type="password"
+            id="signupPassword"
+            class="input"
+            autofocus
+            placeholder="Password"
+          />
+          <div class="input-error-message"></div>
+        </div>
+        <div class="input-group">
+          <input
+            type="password"
+            id="signupPasswordConfirm"
+            class="input"
+            autofocus
+            placeholder="Confirm password"
+          />
+          <div class="input-error-message"></div>
+        </div>
+        <button class="button" type="submit">Continue</button>
+        <p class="text">
+          <a class="link" href="" id="linkLogin">Already have an account? Login</a>
+        </p>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -85,30 +80,20 @@ import "./Login.js";
 export default {
   name: "LoginPage",
   data() {
-    return {
-
-
-    }
+    return {};
   },
-  methods: {
-    
-  }
+  methods: {},
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.login {
+.wrapper {
   --color-primary: #009579;
   --color-primary-dark: #007f67;
   --color-secondary: #252c6a;
   --color-error: #cc3333;
   --color-success: #4bb544;
 
-  
-  }
-
-.container {
   margin: 0;
   height: 100vh;
   display: flex;
@@ -116,21 +101,17 @@ export default {
   justify-content: center;
   font-size: 18px;
   background-size: cover;
-  background-color: #b8c6db;
-  background-image: linear-gradient(315deg, #b8c6db 0%, #f5f7fa 74%);
+}
 
-  /* width: 400px;
-  max-width: 400px; */
-  width: 100%;
-  /* margin: 1rem; */
-  margin: auto;
+.container {
+  width: 400px;
+  max-width: 400px;
+  margin: 1rem;
   padding: 2rem;
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   background: #ffffff;
 }
-
-
 
 .container,
 .input,
@@ -211,6 +192,7 @@ export default {
 }
 
 .text {
+  margin-top: 10px;
   text-align: center;
 }
 
@@ -236,5 +218,4 @@ export default {
 .message-error {
   color: var(--color-error);
 }
-
 </style>

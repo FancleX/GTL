@@ -31,4 +31,9 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.controller {
+  height: 100%;
+}
+
+</style>
