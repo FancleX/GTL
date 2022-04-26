@@ -181,7 +181,7 @@ footer.page-footer {
   bottom: 0;
   width: 100%;
   height: 1.5rem;
-  /* margin-top: auto; */
+  margin-top: auto;
   border-top: 2px solid rgba(44, 44, 46, 0.5);
 }
 

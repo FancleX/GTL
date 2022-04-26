@@ -41,7 +41,7 @@ public class UserController {
     }
 
     // user signin
-    // JSON format {"data": "email=xxxx&password=xxxxxxxx"}
+    // JSON format {"email": "xxxx", "password": "xxxx"}
     @PostMapping("/sign_in")
     public BaseResponse<Boolean> isSignIn(@RequestBody String data) {
         return userService.isSignIn(data);

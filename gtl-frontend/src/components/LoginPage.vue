@@ -1,57 +1,74 @@
 <template>
   <div class="wrapper">
     <div class="container">
-      <form class="form" :id="login">
+      <form class="form" v-if="!goCreateAccount">
         <h1 class="title">Login</h1>
-        <div class="message message-error"></div>
-        <div class="input-group">
-          <input type="text" class="input" autofocus placeholder="Email" />
-          <div class="input-error-message"></div>
+        <div class="message message-error" v-show="!isValidEmail">
+          <span> Invalid email </span>
         </div>
         <div class="input-group">
-          <input type="password" class="input" autofocus placeholder="Password" />
-          <div class="input-error-message"></div>
+          <input type="text" class="input" placeholder="Email" v-model="email" />
+          <div class="input-error-message" v-show="!isCorrectPassword">
+            <span> {{ msg }} </span>
+          </div>
         </div>
-        <button class="button" type="submit">Continue</button>
+        <div class="input-group">
+          <input
+            type="password"
+            class="input"
+            placeholder="Password"
+            autocomplete
+            v-model="password"
+          />
+        </div>
+        <button class="button" type="button" @click="checkPassword()">Continue</button>
         <p class="text">
           <a href="#" class="link">Forgot your password?</a>
         </p>
         <p class="text">
-          <a class="link" href="./" id="linkCreateAccount"
+          <a class="link" @click="toggleCreateAccount()"
             >Don't have an account? Sign Up Here</a
           >
         </p>
       </form>
-      <form class="form form-hidden" id="createAccount">
+
+      <form class="form" v-if="goCreateAccount">
         <h1 class="title">Create Account</h1>
-        <div class="message message-error"></div>
+        <div class="message message-error" v-if="!isValidUsername">
+          <span> Invalid username </span>
+        </div>
         <div class="input-group">
           <input
             type="text"
             id="signupUsername"
             class="input"
-            autofocus
             placeholder="Username"
+            v-model="signupUserName"
           />
-          <div class="input-error-message"></div>
+          <div class="message message-error" v-if="!isValidEmail">
+            <span> Invalid email </span>
+          </div>
         </div>
         <div class="input-group">
           <input
             type="text"
             id="signupEmail"
             class="input"
-            autofocus
             placeholder="Email Address"
+            v-model="signupEmail"
           />
-          <div class="input-error-message"></div>
+          <div class="message message-error" v-if="!isValidSignupPassword">
+            <span> Invalid password / passwords are inconsistent </span>
+          </div>
         </div>
         <div class="input-group">
           <input
             type="password"
             id="signupPassword"
             class="input"
-            autofocus
             placeholder="Password"
+            autocomplete
+            v-model="signupPassword1"
           />
           <div class="input-error-message"></div>
         </div>
@@ -60,14 +77,19 @@
             type="password"
             id="signupPasswordConfirm"
             class="input"
-            autofocus
             placeholder="Confirm password"
+            autocomplete
+            v-model="signupPassword2"
           />
-          <div class="input-error-message"></div>
+          <div class="input-error-message" v-if="!hasMsg">
+            <span>
+              {{ signupMsg }}
+            </span>
+          </div>
         </div>
-        <button class="button" type="submit">Continue</button>
+        <button class="button" type="button" @click="signup">Continue</button>
         <p class="text">
-          <a class="link" href="" id="linkLogin">Already have an account? Login</a>
+          <a class="link" @click="toggleLogin()">Already have an account? Login</a>
         </p>
       </form>
     </div>
@@ -75,14 +97,138 @@
 </template>
 
 <script>
-import "./Login.js";
+/* eslint-disable no-useless-escape */
+import axios from "axios";
 
 export default {
   name: "LoginPage",
   data() {
-    return {};
+    return {
+      email: "",
+      password: "",
+      isValidEmail: true,
+      isCorrectPassword: true,
+      goCreateAccount: false,
+      msg: "",
+
+      signupUserName: "",
+      signupEmail: "",
+      signupPassword1: "",
+      signupPassword2: "",
+      isValidUsername: true,
+      isValidSignupPassword: true,
+      signupMsg: "",
+      hasMsg: true,
+    };
   },
-  methods: {},
+  watch: {
+    // eslint-disable-next-line
+    email(email) {
+      this.checkEmailValidation(email);
+    },
+    signupUserName(username) {
+      this.checkUsername(username);
+    },
+    signupEmail(email) {
+      this.checkEmailValidation(email);
+    },
+  },
+  methods: {
+    checkEmailValidation(email) {
+      if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+        this.isValidEmail = true;
+      } else {
+        this.isValidEmail = false;
+      }
+      // console.log(this.isValidEmail);
+    },
+    async checkPassword() {
+      await axios
+        .post("api/user/sign_in", {
+          email: this.email,
+          password: this.password,
+        })
+        .then((response) => {
+          // console.log(response);
+          if (response.data.data == true) {
+            this.isCorrectPassword = true;
+          } else if (response.data.message == "the user is not in the database") {
+            this.isCorrectPassword = false;
+            this.msg = "Account does not exist!";
+          } else if (response.data.message == "incorrect password") {
+            this.isCorrectPassword = false;
+            this.msg = "Incorrect password!";
+          }
+        })
+        .catch((error) => {
+          alert(error);
+        });
+    },
+    toggleCreateAccount() {
+      this.goCreateAccount = true;
+      this.isValidEmail = true;
+    },
+    toggleLogin() {
+      this.goCreateAccount = false;
+      this.isValidEmail = true;
+    },
+    // sign up
+    checkUsername(username) {
+      if (username == "" || username.trim().length === 0) {
+        this.isValidUsername = false;
+      } else {
+        this.isValidUsername = true;
+      }
+    },
+    checkSignupPassword() {
+      if (this.signupPassword1 == "" || this.signupPassword1.trim().length === 0) {
+        this.isValidSignupPassword = false;
+      } else if (this.signupPassword1 !== this.signupPassword2) {
+        this.isValidSignupPassword = false;
+      } else {
+        this.isValidSignupPassword = true;
+      }
+    },
+    async signup() {
+      this.checkSignupPassword();
+      if (
+        this.isValidSignupPassword == false ||
+        this.isValidEmail == false ||
+        this.isValidUsername == false
+      ) {
+        return;
+      }
+
+      await axios
+        .post("api/user/sign_up", {
+          account: {
+            userName: this.signupUserName,
+            email: this.signupEmail,
+            passWord: this.signupPassword1,
+            accountType: "NORMAL",
+          },
+          bookMarks: [],
+          contribution: [],
+          comments: [],
+        })
+        .then((response) => {
+          console.log(response);
+          if (response.data.message !== "success") {
+            this.signupMsg = response.data.message;
+            this.hasMsg = false;
+          } else {
+            this.signupMsg = "";
+            this.hasMsg = true;
+          }
+        })
+        .catch((error) => {
+          alert(error);
+        });
+    },
+
+
+
+  },
 };
 </script>
 
@@ -95,12 +241,12 @@ export default {
   --color-success: #4bb544;
 
   margin: 0;
-  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 18px;
   background-size: cover;
+  padding-top: 5rem;
 }
 
 .container {
@@ -208,7 +354,8 @@ export default {
 
 .message {
   text-align: center;
-  margin-bottom: 1rem;
+  margin-top: 0.7rem;
+  margin-bottom: 0.3rem;
 }
 
 .message-success {

@@ -46,41 +46,47 @@ public class UserService {
     // add a user
     @Transactional
     public BaseResponse<String> addUser(User user) {
+        // check if username is legal
+        if (user.getAccount().getUserName() == null || user.getAccount().getUserName() == "") {
+            return ResultStatus.fail("Invalid username");
+        }
         // check if the user exists
         List<User> userList = userRepository.findAll();
         for (User u : userList) {
             if (user.getAccount().getEmail().equals(u.getAccount().getEmail())) {
-                return ResultStatus.fail("the user existed");
+                return ResultStatus.fail("User already exists");
             }
         }
         // a user at lease should have a valid email address and password
         if ((user.getAccount().getEmail() == null) || (user.getAccount().getEmail() == "")) {
-            return ResultStatus.fail("invalid email address");
+            return ResultStatus.fail("Invalid email address");
         }
         if ((user.getAccount().getPassWord() == null) || (user.getAccount().getPassWord() == "")) {
-            return ResultStatus.fail("invalid password");
+            return ResultStatus.fail("Invalid password");
         }
         userRepository.save(user);
         return ResultStatus.success(user.getAccount().getUserName());
     }
 
     @Transactional
-    // format "email=xxxx&password=xxxxxxxx"
+    // JSON format {"email": "xxxx", "password": "xxxx"}
     public BaseResponse<Boolean> isSignIn(String data) {
-        String email;
-        String password;
-        String[] ls = data.split("&");
-        email = ls[0].split("=")[1];
-        password = ls[1].split("=")[1];
-        password = password.substring(0, password.length() - 4);
-        Optional<Account> account = accountRepository.findByEmail(email);
-        if (!account.isPresent()) {
-            return ResultStatus.fail("the user is not in the database");
+        try {
+            Object obj = new JSONParser().parse(data);
+            JSONObject jo = (JSONObject) obj;
+            String email = (String) jo.get("email");
+            String password = (String) jo.get("password");
+            Optional<Account> account = accountRepository.findByEmail(email);
+            if (!account.isPresent()) {
+                return ResultStatus.fail("the user is not in the database");
+            }
+            if (account.get().getPassWord().equals(password)) {
+                return ResultStatus.success(true);
+            }
+            return ResultStatus.fail("incorrect password");
+        } catch (ParseException e) {
+            return ResultStatus.fail("input format is wrong");
         }
-        if (account.get().getPassWord().equals(password)) {
-            return ResultStatus.success(true);
-        }
-        return ResultStatus.fail("incorrect password");
     }
 
     public BaseResponse<List<Article>> getBookMarks(Long id) {

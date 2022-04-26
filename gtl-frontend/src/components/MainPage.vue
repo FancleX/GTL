@@ -17,7 +17,7 @@
       <!-- carousel  -->
       <div class="row slides">
         <div class="col"></div>
-        <div class="col-sm-8 col-md-4">
+        <div class="col-sm-8 col-md-6">
           <div id="content-display" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-indicators">
               <button
@@ -63,7 +63,7 @@
                   <img
                     :src="imgUrls[2]"
                     class="d-block img-fluid img-center"
-                    alt="thrid slide"
+                    alt="third slide"
                 /></a>
               </div>
             </div>
