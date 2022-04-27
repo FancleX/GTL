@@ -19,8 +19,16 @@
             <a href="#articleHeader" style="text-decoration: none">
               <li class="overview">Overview</li>
             </a>
-            <a :href="jumpingTarget" @click="jumpingTo(index)" style="text-decoration: none" v-for="(item, index) in paragraphs" :key="item">
-              <li class="nav-list">{{ (item.subHeader || "").substring(0, 6) + "..." }}</li>
+            <a
+              :href="jumpingTarget"
+              @click="jumpingTo(index)"
+              style="text-decoration: none"
+              v-for="(item, index) in paragraphs"
+              :key="item"
+            >
+              <li class="nav-list">
+                {{ (item.subHeader || "").substring(0, 6) + "..." }}
+              </li>
             </a>
           </div>
         </ul>
@@ -30,7 +38,7 @@
         <section class="introduction">
           <div class="format">
             <article class="articleBody" v-for="(item, index) in paragraphs" :key="item">
-              <h1 class="subheader" :id="index" >{{ item.subHeader }}</h1>
+              <h1 class="subheader" :id="index">{{ item.subHeader }}</h1>
               {{ item.content }}
             </article>
           </div>
@@ -44,20 +52,40 @@
               <li v-for="(item, index) in questions" :key="item" :id="currentQuestion">
                 <p>{{ item.description }}</p>
                 <form>
-                  <input type="radio" name="fav_language" @click="checkAnswer('A', item.answer, index)" />
+                  <input
+                    type="radio"
+                    name="fav_language"
+                    @click="checkAnswer('A', item.answer, index)"
+                  />
                   <label class="option">A</label>
-                  <input type="radio" name="fav_language" @click="checkAnswer('B', item.answer, index)" />
+                  <input
+                    type="radio"
+                    name="fav_language"
+                    @click="checkAnswer('B', item.answer, index)"
+                  />
                   <label class="option">B</label>
-                  <input type="radio" name="fav_language" @click="checkAnswer('C', item.answer, index)" />
+                  <input
+                    type="radio"
+                    name="fav_language"
+                    @click="checkAnswer('C', item.answer, index)"
+                  />
                   <label class="option">C</label>
-                  <input type="radio" name="fav_language" @click="checkAnswer('D', item.answer, index)" />
+                  <input
+                    type="radio"
+                    name="fav_language"
+                    @click="checkAnswer('D', item.answer, index)"
+                  />
                   <label class="option">D</label>
-                  <label class="option" v-show="currentQuestion === index"> {{ indicator }} </label>
+                  <label class="option" v-show="currentQuestion === index">
+                    {{ indicator }}
+                  </label>
                   <button type="button" class="showAnswer" @click="toggleAnswer">
                     Show answer & explaination
                   </button>
                 </form>
-                <p v-if="showAnswer && (currentQuestion === index)">{{ item.explaination }}</p>
+                <p v-if="showAnswer && currentQuestion === index">
+                  {{ item.explaination }}
+                </p>
               </li>
             </ol>
           </div>
@@ -75,7 +103,12 @@
             <label> {{ commentMakerNames[index] }}: </label>
             {{ item.message }}
           </div>
-          <input class="discussionContent" placeholder="Leave your comments here: " />
+          <input
+            class="discussionContent"
+            placeholder="Leave your comments here: "
+            v-model="submitComment"
+            @keyup.enter="commitComment"
+          />
         </section>
       </div>
       <div class="col"></div>
@@ -102,6 +135,7 @@ export default {
       jumpingTarget: "",
       indicator: "",
       currentQuestion: null,
+      submitComment: "",
     };
   },
   created() {
@@ -141,7 +175,7 @@ export default {
         .get("api/article/getCommentMaker/" + this.articleId)
         .then((response) => {
           // console.log(response);
-          this.commentMakerIds = response.data.data
+          this.commentMakerIds = response.data.data;
           // console.log(self.commentMakerIds);
           this.getCommentMaker(this.commentMakerIds);
         })
@@ -153,7 +187,7 @@ export default {
       // console.log(ids);
       await axios
         .post("api/user/getNames", {
-          userIds: ids
+          userIds: ids,
         })
         .then((response) => {
           // console.log(response);
@@ -165,26 +199,46 @@ export default {
         });
     },
     jumpingTo(index) {
-    this.jumpingTarget = "#";
-    this.jumpingTarget += index;
-    // console.log(this.jumpingTarget)
-  },
-  checkAnswer(pickedAnswer, answer, index) {
-    // console.log(pickedAnswer);
-    // console.log(answer)
-    this.currentQuestion = index;
-    this.showAnswer = false;
-    // this.questionId = "#Q";
-    // this.questionId += index;
-    // console.log(this.questionId);
-    if (pickedAnswer === answer){
-      // console.log(true);
-      this.indicator = "Correct!";
-    } else {
-      this.indicator = "Wrong!";
-    }
-  }
-
+      this.jumpingTarget = "#";
+      this.jumpingTarget += index;
+      // console.log(this.jumpingTarget)
+    },
+    checkAnswer(pickedAnswer, answer, index) {
+      // console.log(pickedAnswer);
+      // console.log(answer)
+      this.currentQuestion = index;
+      this.showAnswer = false;
+      // this.questionId = "#Q";
+      // this.questionId += index;
+      // console.log(this.questionId);
+      if (pickedAnswer === answer) {
+        // console.log(true);
+        this.indicator = "Correct!";
+      } else {
+        this.indicator = "Wrong!";
+      }
+    },
+    async commitComment() {
+      if (this.submitComment !== "" && this.submitComment.trim().length !== 0) {
+        await axios
+          .post("api/article/addComment", {
+            userId: 1,
+            articleId: this.articleId,
+            message: this.submitComment,
+          })
+          .then((response) => {
+            console.log(response);
+            if (response.data.message === "succeed") {
+              alert("Thanks for comments!");
+            }
+          })
+          .catch((error) => {
+            alert(error);
+          });
+      } else {
+        alert("Comments can not be empty!");
+      }
+    },
   },
 };
 </script>
@@ -201,7 +255,7 @@ export default {
 .navbar-vertical {
   display: flex;
   padding: 10px 10px 20px 10px;
-  margin: auto;
+  /* margin: auto; */
   flex-direction: column;
   align-items: center;
   list-style-type: circle;

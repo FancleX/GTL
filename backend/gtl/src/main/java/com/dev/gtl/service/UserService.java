@@ -70,7 +70,7 @@ public class UserService {
 
     @Transactional
     // JSON format {"email": "xxxx", "password": "xxxx"}
-    public BaseResponse<Boolean> isSignIn(String data) {
+    public BaseResponse<Long> isSignIn(String data) {
         try {
             Object obj = new JSONParser().parse(data);
             JSONObject jo = (JSONObject) obj;
@@ -81,7 +81,8 @@ public class UserService {
                 return ResultStatus.fail("the user is not in the database");
             }
             if (account.get().getPassWord().equals(password)) {
-                return ResultStatus.success(true);
+                Long userId = userRepository.getUserIdByEmail(email);
+                return ResultStatus.success(userId);
             }
             return ResultStatus.fail("incorrect password");
         } catch (ParseException e) {

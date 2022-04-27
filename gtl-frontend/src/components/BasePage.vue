@@ -21,7 +21,7 @@
               <a
                 class="nav-link active"
                 aria-current="page"
-                href="index.html"
+                href="#"
                 @click="toggleHome"
                 >Home</a
               >
@@ -38,9 +38,10 @@
             </li>
           </ul>
           <form class="d-flex">
-            <!-- <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"> -->
-            <!-- <img src="../assets/logo.png" alt="user-profileImg" class="user-profileImg"> -->
-            <button class="btn btn-outline-success" type="button" @click="toggleLogin">
+            <div v-if="userId"> 
+            <img src="../assets/userIcon.png" alt="user-profileImg" class="user-profileImg">
+            </div>
+            <button class="btn btn-outline-success" type="button" @click="toggleLogin" v-if="!userId" >
               Login
             </button>
           </form>
@@ -49,7 +50,7 @@
     </nav>
 
     <div class="container dynamic">
-      <PageController :home="goHome" :explorer="goExplorer" :aboutUs="goAboutUs" :login="goLogin"/>
+      <PageController :home="goHome" :explorer="goExplorer" :aboutUs="goAboutUs" :login="goLogin" @fetchUser="grabUserInfo($event)" />
     </div>
 
     <!-- Footer -->
@@ -92,6 +93,7 @@ export default {
       goExplorer: false,
       goAboutUs: false,
       goLogin: false,
+      userId: null,
     };
   },
   methods: {
@@ -119,6 +121,10 @@ export default {
       this.goExplorer = false;
       this.goLogin = true;
     },
+    grabUserInfo(id) {
+      this.userId = id;
+      // console.log(this.userId);
+    }
   },
 };
 </script>

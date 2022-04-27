@@ -9,7 +9,7 @@
     </div>
 
     <div v-if="login"> 
-      <LoginPage />
+      <LoginPage @getUser="grabUserInfo($event)" />
     </div>
 
   </div>
@@ -28,6 +28,16 @@ export default {
     LoginPage,
   },
   props: ["home", "explorer", "aboutUs", "login"],
+  data() {
+    return {
+    }
+  },
+  methods: {
+    grabUserInfo(id) {
+      this.$emit("fetchUser", id);
+      // console.log(id);
+    },
+  }
 };
 </script>
 

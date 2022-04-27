@@ -81,7 +81,7 @@
             autocomplete
             v-model="signupPassword2"
           />
-          <div class="input-error-message" v-if="!hasMsg">
+          <div class="input-error-message" v-if="hasMsg">
             <span>
               {{ signupMsg }}
             </span>
@@ -110,6 +110,7 @@ export default {
       isCorrectPassword: true,
       goCreateAccount: false,
       msg: "",
+      userId: null,
 
       signupUserName: "",
       signupEmail: "",
@@ -118,7 +119,7 @@ export default {
       isValidUsername: true,
       isValidSignupPassword: true,
       signupMsg: "",
-      hasMsg: true,
+      hasMsg: false,
     };
   },
   watch: {
@@ -150,14 +151,19 @@ export default {
         })
         .then((response) => {
           // console.log(response);
-          if (response.data.data == true) {
-            this.isCorrectPassword = true;
-          } else if (response.data.message == "the user is not in the database") {
+          
+          if (response.data.message == "the user is not in the database") {
             this.isCorrectPassword = false;
             this.msg = "Account does not exist!";
           } else if (response.data.message == "incorrect password") {
             this.isCorrectPassword = false;
             this.msg = "Incorrect password!";
+          } else {
+            this.isCorrectPassword = true;
+            this.userId = response.data.data;
+            // console.log(userId);
+            this.$emit("getUser", this.userId);
+            // window.location.href = 'index.html';
           }
         })
         .catch((error) => {
@@ -213,12 +219,12 @@ export default {
         })
         .then((response) => {
           console.log(response);
-          if (response.data.message !== "success") {
+          if (response.data.message !== "succeed") {
             this.signupMsg = response.data.message;
-            this.hasMsg = false;
-          } else {
-            this.signupMsg = "";
             this.hasMsg = true;
+          } else {
+            this.hasMsg = false;
+            alert("Thank you for joining us!")
           }
         })
         .catch((error) => {
