@@ -163,7 +163,8 @@ export default {
             this.userId = response.data.data;
             // console.log(userId);
             this.$emit("getUser", this.userId);
-            // window.location.href = 'index.html';
+            localStorage.userId = this.userId;
+            window.location.href = '/home';
           }
         })
         .catch((error) => {
