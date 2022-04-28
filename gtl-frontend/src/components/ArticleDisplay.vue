@@ -1,118 +1,128 @@
 <template>
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col"></div>
-      <div class="col-sm-12 col-md-10">
-        <div class="row">
-          <div class="header">
-            <header class="articleHeader" id="articleHeader">{{ header }}</header>
+  <div v-if="articleId">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col"></div>
+        <div class="col-sm-12 col-md-10">
+          <div class="row">
+            <div class="header">
+              <header class="articleHeader" id="articleHeader">{{ header }}</header>
+            </div>
+          </div>
+        </div>
+        <div class="col"></div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4 navList">
+          <ul class="navbar-vertical">
+            <div class="nav-wrapper">
+              <a href="#articleHeader" style="text-decoration: none">
+                <li class="overview">Overview</li>
+              </a>
+              <a
+                :href="jumpingTarget"
+                @click="jumpingTo(index)"
+                style="text-decoration: none"
+                v-for="(item, index) in paragraphs"
+                :key="item"
+              >
+                <li class="nav-list">
+                  {{ (item.subHeader || "").substring(0, 6) + "..." }}
+                </li>
+              </a>
+            </div>
+          </ul>
+        </div>
+
+        <div class="col-sm-10 col-md-8">
+          <section class="introduction">
+            <div class="format">
+              <article
+                class="articleBody"
+                v-for="(item, index) in paragraphs"
+                :key="item"
+              >
+                <h1 class="subheader" :id="index">{{ item.subHeader }}</h1>
+                {{ item.content }}
+              </article>
+            </div>
+          </section>
+
+          <!-- questions -->
+          <div class="row articleBody">
+            <div class="col-sm-10 col-md-10">
+              <h1 class="subheader">Exercise</h1>
+              <ol>
+                <li v-for="(item, index) in questions" :key="item" :id="currentQuestion">
+                  <p>{{ item.description }}</p>
+                  <form>
+                    <input
+                      type="radio"
+                      name="fav_language"
+                      @click="checkAnswer('A', item.answer, index)"
+                    />
+                    <label class="option">A</label>
+                    <input
+                      type="radio"
+                      name="fav_language"
+                      @click="checkAnswer('B', item.answer, index)"
+                    />
+                    <label class="option">B</label>
+                    <input
+                      type="radio"
+                      name="fav_language"
+                      @click="checkAnswer('C', item.answer, index)"
+                    />
+                    <label class="option">C</label>
+                    <input
+                      type="radio"
+                      name="fav_language"
+                      @click="checkAnswer('D', item.answer, index)"
+                    />
+                    <label class="option">D</label>
+                    <label class="option" v-show="currentQuestion === index">
+                      {{ indicator }}
+                    </label>
+                    <button type="button" class="showAnswer" @click="toggleAnswer">
+                      Show answer & explaination
+                    </button>
+                  </form>
+                  <p v-if="showAnswer && currentQuestion === index">
+                    {{ item.explaination }}
+                  </p>
+                </li>
+              </ol>
+            </div>
           </div>
         </div>
       </div>
-      <div class="col"></div>
-    </div>
 
-    <div class="row">
-      <div class="col-md-4 navList">
-        <ul class="navbar-vertical">
-          <div class="nav-wrapper">
-            <a href="#articleHeader" style="text-decoration: none">
-              <li class="overview">Overview</li>
-            </a>
-            <a
-              :href="jumpingTarget"
-              @click="jumpingTo(index)"
-              style="text-decoration: none"
-              v-for="(item, index) in paragraphs"
-              :key="item"
-            >
-              <li class="nav-list">
-                {{ (item.subHeader || "").substring(0, 6) + "..." }}
-              </li>
-            </a>
-          </div>
-        </ul>
-      </div>
-
-      <div class="col-sm-10 col-md-8">
-        <section class="introduction">
-          <div class="format">
-            <article class="articleBody" v-for="(item, index) in paragraphs" :key="item">
-              <h1 class="subheader" :id="index">{{ item.subHeader }}</h1>
-              {{ item.content }}
-            </article>
-          </div>
-        </section>
-
-        <!-- questions -->
-        <div class="row articleBody">
-          <div class="col-sm-10 col-md-10">
-            <h1 class="subheader">Exercise</h1>
-            <ol>
-              <li v-for="(item, index) in questions" :key="item" :id="currentQuestion">
-                <p>{{ item.description }}</p>
-                <form>
-                  <input
-                    type="radio"
-                    name="fav_language"
-                    @click="checkAnswer('A', item.answer, index)"
-                  />
-                  <label class="option">A</label>
-                  <input
-                    type="radio"
-                    name="fav_language"
-                    @click="checkAnswer('B', item.answer, index)"
-                  />
-                  <label class="option">B</label>
-                  <input
-                    type="radio"
-                    name="fav_language"
-                    @click="checkAnswer('C', item.answer, index)"
-                  />
-                  <label class="option">C</label>
-                  <input
-                    type="radio"
-                    name="fav_language"
-                    @click="checkAnswer('D', item.answer, index)"
-                  />
-                  <label class="option">D</label>
-                  <label class="option" v-show="currentQuestion === index">
-                    {{ indicator }}
-                  </label>
-                  <button type="button" class="showAnswer" @click="toggleAnswer">
-                    Show answer & explaination
-                  </button>
-                </form>
-                <p v-if="showAnswer && currentQuestion === index">
-                  {{ item.explaination }}
-                </p>
-              </li>
-            </ol>
-          </div>
+      <div class="row">
+        <div class="col"></div>
+        <div class="col-sm-10 col-md-8">
+          <section class="discussion">
+            <div class="discussionTitle">Discussions:</div>
+            <div class="breakLine"></div>
+            <div class="discussionContent" v-for="(item, index) in comments" :key="item">
+              <label> {{ commentMakerNames[index] }}: </label>
+              {{ item.message }}
+            </div>
+            <input
+              class="discussionContent"
+              placeholder="Leave your comments here: "
+              v-model="submitComment"
+              @keyup.enter="commitComment"
+            />
+          </section>
         </div>
+        <div class="col"></div>
       </div>
     </div>
+  </div>
 
-    <div class="row">
-      <div class="col"></div>
-      <div class="col-sm-10 col-md-8">
-        <section class="discussion">
-          <div class="discussionTitle">Discussions:</div>
-          <div class="breakLine"></div>
-          <div class="discussionContent" v-for="(item, index) in comments" :key="item">
-            <label> {{ commentMakerNames[index] }}: </label>
-            {{ item.message }}
-          </div>
-          <input
-            class="discussionContent"
-            placeholder="Leave your comments here: "
-            v-model="submitComment"
-            @keyup.enter="commitComment"
-          />
-        </section>
-      </div>
-      <div class="col"></div>
-    </div>
+  <div v-else>
+    <p>Loading page ...</p>
   </div>
 </template>
 
@@ -121,7 +131,6 @@ import axios from "axios";
 
 export default {
   name: "ArticleDisplay",
-  props: ["articleToDisplay"],
   data() {
     return {
       showAnswer: false,
@@ -138,7 +147,7 @@ export default {
       submitComment: "",
     };
   },
-  created() {
+  mounted() {
     this.init();
   },
   methods: {
@@ -146,7 +155,7 @@ export default {
       this.showAnswer = true;
     },
     init() {
-      this.articleId = this.articleToDisplay;
+      this.articleId = this.$route.params.id;
       // console.log(this.articleId);
       this.fetchArticle();
       this.fetchCommentMakerId();
@@ -154,7 +163,7 @@ export default {
     },
     async fetchArticle() {
       await axios
-        .get("api/article/search/" + this.articleId)
+        .get("article/search/" + this.articleId)
         .then((response) => {
           // console.log(response);
           this.header = response.data.data.header;
@@ -172,7 +181,7 @@ export default {
     },
     async fetchCommentMakerId() {
       await axios
-        .get("api/article/getCommentMaker/" + this.articleId)
+        .get("article/getCommentMaker/" + this.articleId)
         .then((response) => {
           // console.log(response);
           this.commentMakerIds = response.data.data;
@@ -180,13 +189,13 @@ export default {
           this.getCommentMaker(this.commentMakerIds);
         })
         .catch((error) => {
-          alert.error(error);
+          alert(error);
         });
     },
     async getCommentMaker(ids) {
       // console.log(ids);
       await axios
-        .post("api/user/getNames", {
+        .post("user/getNames", {
           userIds: ids,
         })
         .then((response) => {
@@ -221,7 +230,7 @@ export default {
     async commitComment() {
       if (this.submitComment !== "" && this.submitComment.trim().length !== 0) {
         await axios
-          .post("api/article/addComment", {
+          .post("article/addComment", {
             userId: 1,
             articleId: this.articleId,
             message: this.submitComment,
