@@ -1,103 +1,113 @@
 <template>
   <div class="container-fluid">
-      <!-- navbar -->
-      <nav class="navbar navbar-expand-lg navbar-light navbar-custom">
-        <div class="container-fluid">
-          <img src="./assets/logo.png" class="navbar-brand" alt="logo" />
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <router-link
-                  to="/"
-                  class="nav-link active"
-                  aria-current="page"
-                  >Home</router-link
-                >
-              </li>
-              <li class="nav-item">
-                <router-link to="/explore" class="nav-link active"
-                  >Explore</router-link
-                >
-              </li>
-              <li class="nav-item">
-                <router-link to="/" class="nav-link active"
-                  >About us</router-link
-                >
-              </li>
-            </ul>
-            <form class="d-flex">
-              <div v-if="userId">
-                <img
-                  src="./assets/userIcon.png"
-                  alt="user-profileImg"
-                  class="user-profileImg"
-                />
-              </div>
-              <button
-                class="btn btn-outline-success"
-                type="button"
-                @click="$router.push('/login')"
-                v-if="!userId"
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light navbar-custom">
+      <div class="container-fluid">
+        <img src="./assets/logo.png" class="navbar-brand" alt="logo" />
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <router-link to="/" class="nav-link active" aria-current="page"
+                >Home</router-link
               >
-                Login
-              </button>
-            </form>
-          </div>
+            </li>
+            <li class="nav-item">
+              <router-link to="/explore" class="nav-link active">Explore</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link to="/" class="nav-link active">About us</router-link>
+            </li>
+          </ul>
+          <form class="d-flex">
+            <div v-if="userId">
+              <UserProfile />
+            </div>
+            <button
+              class="btn btn-outline-success"
+              type="button"
+              @click="$router.push('/login')"
+              v-if="!userId"
+            >
+              Login
+            </button>
+          </form>
         </div>
-      </nav>
-
-      <div class="container dynamic">
-        <router-view />
       </div>
+    </nav>
 
-      <!-- Footer -->
-      <footer class="page-footer font-small">
-        <div class="container-fluid">
-          <div class="row">
-            <!-- Copyright -->
-            <div class="footer-copyright py-4 col-sm-12 col-lg-3">
-              © 2022 Copyright:
-              <router-link to="/"> GetToLearn.com</router-link>
-            </div>
-            <div class="col-sm-12 col-lg-9 socialWrapper">
-              <a href="https://facebook.com" target="_blank">
-                <i class="fa fa-facebook-square fa-3x" aria-hidden="true"></i
-              ></a>
-              <a href="https://google.com" target="_blank">
-                <i class="fa fa-google-plus-square fa-3x" aria-hidden="true"></i
-              ></a>
-              <a href="https://instagram.com" target="_blank">
-                <i class="fa fa-instagram fa-3x" aria-hidden="true"></i
-              ></a>
-            </div>
+    <div class="container dynamic">
+      <router-view />
+    </div>
+
+    <!-- Footer -->
+    <footer class="page-footer font-small">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- Copyright -->
+          <div class="footer-copyright py-4 col-sm-12 col-lg-3">
+            © 2022 Copyright:
+            <router-link to="/"> GetToLearn.com</router-link>
+          </div>
+          <div class="col-sm-12 col-lg-9 socialWrapper">
+            <a href="https://facebook.com" target="_blank">
+              <i class="fa fa-facebook-square fa-3x" aria-hidden="true"></i
+            ></a>
+            <a href="https://google.com" target="_blank">
+              <i class="fa fa-google-plus-square fa-3x" aria-hidden="true"></i
+            ></a>
+            <a href="https://instagram.com" target="_blank">
+              <i class="fa fa-instagram fa-3x" aria-hidden="true"></i
+            ></a>
           </div>
         </div>
-      </footer>
+      </div>
+    </footer>
   </div>
 </template>
 
 <script>
+import UserProfile from "../src/components/UserProfile.vue";
+
 export default {
   name: "App",
+  components: {
+    UserProfile,
+  },
   data() {
     return {
       userId: null,
-    }
+    };
   },
-    mounted() {
-    this.userId = localStorage.userId;
-  }
+  mounted() {
+    this.fetchUser();
+  },
+  unmounted() {
+    // this.clearCache();
+  },
+  methods: {
+    fetchUser() {
+      try {
+        const user = JSON.parse(localStorage.userAccount);
+        this.userId = user.id;
+      } catch (e) {
+        return;
+      }
+    },
+    clearCache() {
+      window.localStorage.clear();
+    },
+  },
 };
 </script>
 

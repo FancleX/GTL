@@ -217,8 +217,6 @@ export default {
       // console.log(answer)
       this.currentQuestion = index;
       this.showAnswer = false;
-      // this.questionId = "#Q";
-      // this.questionId += index;
       // console.log(this.questionId);
       if (pickedAnswer === answer) {
         // console.log(true);

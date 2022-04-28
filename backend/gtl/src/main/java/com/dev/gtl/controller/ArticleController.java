@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/article")
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin
 public class ArticleController {
 
     private final ArticleService articleService;

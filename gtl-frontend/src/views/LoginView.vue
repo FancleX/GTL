@@ -122,6 +122,9 @@ export default {
       hasMsg: false,
     };
   },
+  beforeUnmount() {
+    this.getUserProfile();
+  },
   watch: {
     // eslint-disable-next-line
     email(email) {
@@ -151,7 +154,6 @@ export default {
         })
         .then((response) => {
           // console.log(response);
-          
           if (response.data.message == "the user is not in the database") {
             this.isCorrectPassword = false;
             this.msg = "Account does not exist!";
@@ -162,8 +164,7 @@ export default {
             this.isCorrectPassword = true;
             this.userId = response.data.data;
             // console.log(userId);
-            localStorage.userId = this.userId;
-            this.$router.push('/');
+            this.$router.push("/");
           }
         })
         .catch((error) => {
@@ -224,7 +225,7 @@ export default {
             this.hasMsg = true;
           } else {
             this.hasMsg = false;
-            alert("Thank you for joining us!")
+            alert("Thank you for joining us!");
           }
         })
         .catch((error) => {
@@ -232,8 +233,42 @@ export default {
         });
     },
 
+    async getUserProfile() {
+      await axios
+        .get("user/" + this.userId)
+        .then((response) => {
+          // store user account info
+          const userInfo = {
+            id: this.userId,
+            userName: response.data.data.account.userName,
+          };
+          localStorage.userAccount = JSON.stringify(userInfo);
 
+          // store user bookmark
+          let bookmarkData = response.data.data.bookMarks;
+          let bookmark = [];
+          for (let i = 0; i < bookmarkData.length; i++) {
+            let temp = {
+              articleId: bookmarkData[i].id,
+              articleHeader: bookmarkData[i].header,
+            };
+            bookmark.push(temp);
+          }
+          localStorage.userBookmarks = JSON.stringify(bookmark);
 
+          // store user contributions
+          let contributionArr = response.data.data.contribution;
+          let contribution = [];
+          for (let i = 0; i < contributionArr.length; i++) {
+            let temp = {
+              articleId: contributionArr[i].id,
+              articleHeader: contributionArr[i].header,
+            };
+            contribution.push(temp);
+          }
+          localStorage.userContributions = JSON.stringify(contribution);
+        })
+    },
   },
 };
 </script>
