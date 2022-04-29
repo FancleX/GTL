@@ -164,7 +164,7 @@ export default {
             this.isCorrectPassword = true;
             this.userId = response.data.data;
             // console.log(userId);
-            this.$router.push("/");
+            this.backwards();
           }
         })
         .catch((error) => {
@@ -236,13 +236,13 @@ export default {
     async getUserProfile() {
       await axios
         .get("user/" + this.userId)
-        .then(response => {
+        .then((response) => {
           // store user account info
           const userInfo = {
             id: this.userId,
             userName: response.data.data.account.userName,
           };
-          localStorage.userAccount = JSON.stringify(userInfo);
+          sessionStorage.userAccount = JSON.stringify(userInfo);
 
           // store user bookmark
           let bookmarkData = response.data.data.bookMarks;
@@ -254,7 +254,7 @@ export default {
             };
             bookmark.push(temp);
           }
-          localStorage.userBookmarks = JSON.stringify(bookmark);
+          sessionStorage.userBookmarks = JSON.stringify(bookmark);
 
           // store user contributions
           let contributionArr = response.data.data.contribution;
@@ -266,11 +266,19 @@ export default {
             };
             contribution.push(temp);
           }
-          localStorage.userContributions = JSON.stringify(contribution);
+          sessionStorage.userContributions = JSON.stringify(contribution);
         })
-        .catch(error => {
+        .catch((error) => {
           alert(error);
-        })
+        });
+    },
+    backwards() {
+      if (window.history.length > 1) {
+        // back to last level
+        this.$router.go(-1); 
+      } else {
+        this.$router.push('/');
+      }
     },
   },
 };

@@ -47,7 +47,7 @@
     </nav>
 
     <div class="container dynamic">
-      <router-view />
+      <router-view :key="$route.path" />
     </div>
 
     <!-- Footer -->
@@ -87,7 +87,7 @@ export default {
   data() {
     return {
       userId: null,
-
+    
       user: null,
       bookmark: [],
       contributions: [],
@@ -100,17 +100,17 @@ export default {
     fetchUser() {
       try {
         // get user's account
-        const user = JSON.parse(localStorage.userAccount);
+        const user = JSON.parse(sessionStorage.userAccount);
         this.userId = user.id;
         this.user = user;
         
         // get user's bookmark
-        const bookmark = JSON.parse(localStorage.userBookmarks);
+        const bookmark = JSON.parse(sessionStorage.userBookmarks);
         this.bookmark = bookmark;
         
         // get user's contribution
-        const contribution = JSON.parse(localStorage.userContributions);
-        this.contributions = contribution;
+        const contribution = JSON.parse(sessionStorage.userContributions);
+        this.contributions = contribution; 
       } catch (e) {
         return;
       }

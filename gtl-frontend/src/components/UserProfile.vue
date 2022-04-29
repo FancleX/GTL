@@ -1,46 +1,97 @@
 <template>
-  <div class="dropdown">
-    <a
-      class="profile"
-      href="#"
-      role="button"
-      id="dropdownMenuLink"
-      data-bs-toggle="dropdown"
+  <div class="container-fluid">
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#main_nav"
       aria-expanded="false"
+      aria-label="Toggle navigation"
     >
-      <img src="../assets/userIcon.png" alt="user-profileImg" class="user-profileImg" />
-    </a>
-
-    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-      <li><a class="dropdown-item disabled" href="#">{{ userAccountInfo.userName }}</a></li>
-      <li><a class="dropdown-item" href="#">Another action</a></li>
-      <li><a class="dropdown-item" href="#">Something else here</a></li>
-    </ul>
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="main_nav">
+      <ul class="navbar-nav">
+        <li class="nav-item dropdown" id="myDropdown">
+          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+            <img
+              src="../assets/userIcon.png"
+              alt="user-profileImg"
+              class="user-profileImg"
+            />
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a class="dropdown-item disabled" href="#">
+                {{ userAccountInfo.userName }}
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="#">&lsaquo; Bookmark </a>
+              <ul class="submenu dropdown-menu" v-show="userBookmark.length !== 0">
+                <li v-for="item in userBookmark" :key="item">
+                  <router-link :to="{ name: 'ArticleDisplay', params: {id: item.articleId}}" class="dropdown-item">{{ item.articleHeader.substring(0, 7) + '...' }}</router-link>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a class="dropdown-item" href="#">&lsaquo; Contributions </a>
+              <ul class="submenu dropdown-menu" v-show="userContribution.length !== 0">
+                <li v-for="item in userContribution" :key="item">
+                  <router-link :to="{ name: 'ArticleDisplay', params: {id: item.articleId}}" class="dropdown-item">{{ item.articleHeader.substring(0, 7) + '...' }}</router-link>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
 <script>
-export default {
-name: 'UserProfile',
-props: ['userAccountInfo', 'userBookmark', 'userContribution'],
 
+export default {
+  name: "UserProfile",
+  props: ["userAccountInfo", "userBookmark", "userContribution"],
 };
 </script>
 
 <style scoped>
 .dropdown {
-    margin-right: 3rem;
+  margin-right: 6rem;
 }
 
-.dropdown-menu {
-    left: -90px;
+@media all and (min-width: 992px) {
+  .dropdown-menu li {
+    position: relative;
+  }
+  .nav-item .submenu {
+    display: none;
+    position: absolute;
+    right: 100%;
+    top: -7px;
+  }
+  .nav-item .submenu-left {
+    left: 100%;
+    right: auto;
+  }
+  .dropdown-menu > li:hover {
+    background-color: #f1f1f1;
+  }
+  .dropdown-menu > li:hover > .submenu {
+    display: block;
+  }
 }
+/* ============ desktop view .end// ============ */
 
-@media (max-width: 990px) {
-    .dropdown-menu {
-        left: 0;
-    }
+/* ============ small devices ============ */
+@media (max-width: 991px) {
+  .dropdown-menu .dropdown-menu {
+    margin-left: 0.7rem;
+    margin-right: 0.7rem;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
 }
-
-
 </style>
