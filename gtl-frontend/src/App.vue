@@ -31,7 +31,7 @@
           </ul>
           <form class="d-flex">
             <div v-if="userId">
-              <UserProfile />
+              <UserProfile :userAccountInfo='user' :userBookmark='bookmark' :userContribution='contributions' />
             </div>
             <button
               class="btn btn-outline-success"
@@ -87,25 +87,33 @@ export default {
   data() {
     return {
       userId: null,
+
+      user: null,
+      bookmark: [],
+      contributions: [],
     };
   },
   mounted() {
     this.fetchUser();
   },
-  unmounted() {
-    // this.clearCache();
-  },
   methods: {
     fetchUser() {
       try {
+        // get user's account
         const user = JSON.parse(localStorage.userAccount);
         this.userId = user.id;
+        this.user = user;
+        
+        // get user's bookmark
+        const bookmark = JSON.parse(localStorage.userBookmarks);
+        this.bookmark = bookmark;
+        
+        // get user's contribution
+        const contribution = JSON.parse(localStorage.userContributions);
+        this.contributions = contribution;
       } catch (e) {
         return;
       }
-    },
-    clearCache() {
-      window.localStorage.clear();
     },
   },
 };

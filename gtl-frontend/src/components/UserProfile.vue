@@ -12,7 +12,7 @@
     </a>
 
     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-      <li><a class="dropdown-item" href="#" disabled>Action</a></li>
+      <li><a class="dropdown-item disabled" href="#">{{ userAccountInfo.userName }}</a></li>
       <li><a class="dropdown-item" href="#">Another action</a></li>
       <li><a class="dropdown-item" href="#">Something else here</a></li>
     </ul>
@@ -20,7 +20,11 @@
 </template>
 
 <script>
-export default {};
+export default {
+name: 'UserProfile',
+props: ['userAccountInfo', 'userBookmark', 'userContribution'],
+
+};
 </script>
 
 <style scoped>

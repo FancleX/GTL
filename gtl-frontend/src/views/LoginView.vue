@@ -236,7 +236,7 @@ export default {
     async getUserProfile() {
       await axios
         .get("user/" + this.userId)
-        .then((response) => {
+        .then(response => {
           // store user account info
           const userInfo = {
             id: this.userId,
@@ -267,6 +267,9 @@ export default {
             contribution.push(temp);
           }
           localStorage.userContributions = JSON.stringify(contribution);
+        })
+        .catch(error => {
+          alert(error);
         })
     },
   },
