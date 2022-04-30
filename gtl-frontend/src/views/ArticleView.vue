@@ -48,8 +48,19 @@
                 :key="item"
                 style="white-space: pre-line"
               >
-                <h1 class="subheader" :id="index" v-if="item.subHeader.length !== 0">{{ item.subHeader }}</h1>
-                  {{ item.content }}
+                <!-- subheader -->
+                <h1 class="subheader" :id="index" v-if="item.subHeader.length !== 0">
+                  {{ item.subHeader }}
+                </h1>
+                <!-- body -->
+                {{ item.content }}
+
+                <!-- img -->
+                <div v-if="item.imgSrcList.length !== 0">
+                  <div v-for="img in item.imgSrcList" :key="img" class="articleBody">
+                    <img :src="getImgUrl(index, img.imgSrc)" class="" alt="paragraphImg" />
+                  </div>
+                </div>
 
                 <!-- questions -->
                 <div class="row" v-if="item.questions.length !== 0">
@@ -65,41 +76,10 @@
               </article>
             </div>
           </section>
-
-          <!-- questions -->
-          <!-- <div class="row articleBody">
-            <div class="col-sm-10 col-md-10">
-              <h1 class="subheader">Exercise</h1>
-              <ol>
-                <li v-for="item in questions" :key="item">
-                  <ProblemHandle :question="item" />
-                </li>
-              </ol>
-            </div>
-          </div> -->
         </div>
       </div>
 
-      <!-- <div class="row">
-        <div class="col"></div>
-        <div class="col-sm-10 col-md-8">
-          <section class="discussion">
-            <div class="discussionTitle">Discussions:</div>
-            <div class="breakLine"></div>
-            <div class="discussionContent" v-for="(item, index) in comments" :key="item">
-              <label> {{ commentMakerNames[index] }}: </label>
-              {{ item.message }}
-            </div>
-            <input
-              class="discussionContent"
-              placeholder="Leave your comments here: (press enter to submit)"
-              v-model="submitComment"
-              @keyup.enter="commitComment"
-            />
-          </section>
-        </div>
-        <div class="col"></div>
-      </div> -->
+      <!-- comments -->
       <ArticleComments :userComment="comments" :userId="userId" :articleId="articleId" />
     </div>
   </div>
@@ -125,6 +105,7 @@ export default {
       header: "",
       paragraphs: [],
       comments: [],
+      publicPath: process.env.BASE_URL,
 
       jumpingTarget: "",
 
@@ -196,6 +177,11 @@ export default {
         .catch((error) => {
           alert(error);
         });
+    },
+    getImgUrl(paragraphIndex, imgName) {
+
+      const relativePath = '../imgMaterials/article' + this.articleId + '/paragraph' + (paragraphIndex + 1) + '/' + imgName + '.png';
+      return relativePath;
     },
   },
 };
@@ -272,5 +258,4 @@ export default {
   text-decoration: underline;
   margin-top: 10px;
 }
-
 </style>

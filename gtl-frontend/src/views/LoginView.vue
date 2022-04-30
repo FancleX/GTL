@@ -19,6 +19,7 @@
             placeholder="Password"
             autocomplete
             v-model="password"
+            @keyup.enter="checkPassword()"
           />
         </div>
         <button class="button" type="submit" @click="checkPassword()">Continue</button>
@@ -275,10 +276,7 @@ export default {
         this.$router.go(-1); 
       } else {
         this.$router.push('/');
-      }
-      window.location.reload();
-
-      
+      }      
     },
   },
 };

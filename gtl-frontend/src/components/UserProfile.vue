@@ -13,7 +13,7 @@
     <div class="collapse navbar-collapse" id="main_nav">
       <ul class="navbar-nav">
         <li class="nav-item dropdown" id="myDropdown">
-          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" >
             <img
               src="../assets/userIcon.png"
               alt="user-profileImg"
@@ -31,7 +31,7 @@
               <ul class="submenu dropdown-menu" v-show="bookmark.length !== 0">
                 <li v-for="item in bookmark" :key="item">
                   <router-link
-                    :to="{ name: 'ArticleDisplay', params: { id: item.articleId } }"
+                    :to="{ name: 'ArticleView', params: { id: item.articleId } }"
                     class="dropdown-item"
                     >{{ item.articleHeader.substring(0, 7) + "..." }}</router-link
                   >
@@ -43,7 +43,7 @@
               <ul class="submenu dropdown-menu" v-show="userContribution.length !== 0">
                 <li v-for="item in userContribution" :key="item">
                   <router-link
-                    :to="{ name: 'ArticleDisplay', params: { id: item.articleId } }"
+                    :to="{ name: 'ArticleView', params: { id: item.articleId } }"
                     class="dropdown-item"
                     >{{ item.articleHeader.substring(0, 7) + "..." }}</router-link
                   >

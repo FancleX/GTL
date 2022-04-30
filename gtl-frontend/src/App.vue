@@ -47,7 +47,7 @@
     </nav>
 
     <div class="container dynamic">
-      <router-view :key="$route.path" />
+      <router-view :key="$route.fullPath" />
     </div>
 
     <!-- Footer -->
