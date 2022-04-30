@@ -10,7 +10,11 @@
             </div>
           </div>
         </div>
-        <div class="col"></div>
+        <div class="col">
+          <div v-if="userId">
+            <button type="button" @click="bookmark()">Bookmark</button>
+          </div>
+        </div>
       </div>
 
       <div class="row">
@@ -42,6 +46,7 @@
                 class="articleBody"
                 v-for="(item, index) in paragraphs"
                 :key="item"
+                style="white-space: pre-line"
               >
                 <h1 class="subheader" :id="index">{{ item.subHeader }}</h1>
                 {{ item.content }}
@@ -55,7 +60,7 @@
               <h1 class="subheader">Exercise</h1>
               <ol>
                 <li v-for="(item, index) in questions" :key="item" :id="currentQuestion">
-                  <p>{{ item.description }}</p>
+                  <p style="white-space: pre-line">{{ item.description }}</p>
                   <form>
                     <input
                       type="radio"
@@ -110,7 +115,7 @@
             </div>
             <input
               class="discussionContent"
-              placeholder="Leave your comments here: "
+              placeholder="Leave your comments here: (press enter to submit)"
               v-model="submitComment"
               @keyup.enter="commitComment"
             />
@@ -133,6 +138,7 @@ export default {
   name: "ArticleDisplay",
   data() {
     return {
+      // article
       showAnswer: false,
       articleId: null,
       header: "",
@@ -145,6 +151,9 @@ export default {
       indicator: "",
       currentQuestion: null,
       submitComment: "",
+
+      // user
+      userId: null,
     };
   },
   mounted() {
@@ -159,6 +168,7 @@ export default {
       // console.log(this.articleId);
       this.fetchArticle();
       this.fetchCommentMakerId();
+      this.fetchUser();
       // this.getCommentMaker();
     },
     async fetchArticle() {
@@ -246,6 +256,38 @@ export default {
         alert("Comments can not be empty!");
       }
     },
+    fetchUser() {
+      try {
+        const user = JSON.parse(sessionStorage.userAccount);
+        this.userId = parseInt(user.id);
+      } catch (e) {
+        return;
+      }
+    },
+    async bookmark() {
+      await axios
+        .post("user/bookmark/add", {
+          userId: this.userId,
+          articleId: parseInt(this.articleId),
+        })
+        .then((response) => {
+          if (response.data.code === 200) {
+              alert("Added a bookmark");
+              let bookmark = JSON.parse(sessionStorage.userBookmarks);
+              const data = {
+                articleId: this.articleId,
+                articleHeader: this.header
+              }
+              bookmark.push(data);
+              sessionStorage.userBookmarks = JSON.stringify(bookmark);
+          } else {
+            alert(response.data.message);
+          }
+        })
+        .catch((error) => {
+          alert(error);
+        });
+    },
   },
 };
 </script>
@@ -257,6 +299,7 @@ export default {
   text-align: center;
   margin: 2rem 1rem;
   padding: 10px 0;
+  line-height: normal;
 }
 
 .navbar-vertical {
@@ -267,14 +310,14 @@ export default {
   align-items: center;
   list-style-type: circle;
   list-style-position: inside;
-  width: 300px;
+  width: 100%;
   position: sticky;
   top: 3rem;
   z-index: 100;
 }
 
 .nav-wrapper {
-  width: 100%;
+  max-width: 300px;
   border: 2px solid rgba(44, 44, 46, 0.5);
   border-radius: 10px;
   background-color: rgba(171, 171, 238, 0.5);

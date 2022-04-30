@@ -79,6 +79,7 @@
 <script>
 import UserProfile from "../src/components/UserProfile.vue";
 
+
 export default {
   name: "App",
   components: {
@@ -87,6 +88,7 @@ export default {
   data() {
     return {
       userId: null,
+      data: sessionStorage.getItem('userAccount'),
     
       user: null,
       bookmark: [],
@@ -96,6 +98,13 @@ export default {
   mounted() {
     this.fetchUser();
   },
+  watch: {
+    data(newVal, oldVal) {
+      if (newVal !== oldVal) {
+        console.log(1)
+      }
+    }
+    },
   methods: {
     fetchUser() {
       try {

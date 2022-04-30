@@ -28,9 +28,13 @@
             </li>
             <li>
               <a class="dropdown-item" href="#">&lsaquo; Bookmark </a>
-              <ul class="submenu dropdown-menu" v-show="userBookmark.length !== 0">
-                <li v-for="item in userBookmark" :key="item">
-                  <router-link :to="{ name: 'ArticleDisplay', params: {id: item.articleId}}" class="dropdown-item">{{ item.articleHeader.substring(0, 7) + '...' }}</router-link>
+              <ul class="submenu dropdown-menu" v-show="bookmark.length !== 0">
+                <li v-for="item in bookmark" :key="item">
+                  <router-link
+                    :to="{ name: 'ArticleDisplay', params: { id: item.articleId } }"
+                    class="dropdown-item"
+                    >{{ item.articleHeader.substring(0, 7) + "..." }}</router-link
+                  >
                 </li>
               </ul>
             </li>
@@ -38,7 +42,11 @@
               <a class="dropdown-item" href="#">&lsaquo; Contributions </a>
               <ul class="submenu dropdown-menu" v-show="userContribution.length !== 0">
                 <li v-for="item in userContribution" :key="item">
-                  <router-link :to="{ name: 'ArticleDisplay', params: {id: item.articleId}}" class="dropdown-item">{{ item.articleHeader.substring(0, 7) + '...' }}</router-link>
+                  <router-link
+                    :to="{ name: 'ArticleDisplay', params: { id: item.articleId } }"
+                    class="dropdown-item"
+                    >{{ item.articleHeader.substring(0, 7) + "..." }}</router-link
+                  >
                 </li>
               </ul>
             </li>
@@ -50,10 +58,25 @@
 </template>
 
 <script>
-
 export default {
   name: "UserProfile",
   props: ["userAccountInfo", "userBookmark", "userContribution"],
+  data() {
+    return {
+      bookmark: this.userBookmark,
+    };
+  },
+//   watch: {
+//     bookmark(newVal, oldVal) {
+//         console.log(newVal)
+//       if (newVal.userBookmark.length !== oldVal.userBookmark.length) {
+//           this.$data.bookmark = newVal;
+//         console.log(this.$data.bookmark);
+//       }
+//       //   location.reload();
+//     },
+//     deep: true
+//   },
 };
 </script>
 

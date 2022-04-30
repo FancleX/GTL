@@ -105,6 +105,12 @@ public class UserService {
             JSONObject jo = (JSONObject) obj;
             Long userId = (Long) jo.get("userId");
             Long articleId = (Long) jo.get("articleId");
+            User user = userRepository.findById(userId).get();
+            for (Article article : user.getBookMarks()){
+                if (article.getId().equals(articleId)) {
+                    return ResultStatus.fail("Already bookmarked");
+                }
+            }
             userRepository.addBookMark(userId, articleId);
             return ResultStatus.success("bookmark done");
         } catch (ParseException e) {

@@ -21,7 +21,7 @@
             v-model="password"
           />
         </div>
-        <button class="button" type="button" @click="checkPassword()">Continue</button>
+        <button class="button" type="submit" @click="checkPassword()">Continue</button>
         <p class="text">
           <a href="#" class="link">Forgot your password?</a>
         </p>
@@ -122,11 +122,7 @@ export default {
       hasMsg: false,
     };
   },
-  beforeUnmount() {
-    this.getUserProfile();
-  },
   watch: {
-    // eslint-disable-next-line
     email(email) {
       this.checkEmailValidation(email);
     },
@@ -164,6 +160,7 @@ export default {
             this.isCorrectPassword = true;
             this.userId = response.data.data;
             // console.log(userId);
+            this.getUserProfile();
             this.backwards();
           }
         })
@@ -279,6 +276,9 @@ export default {
       } else {
         this.$router.push('/');
       }
+      window.location.reload();
+
+      
     },
   },
 };
