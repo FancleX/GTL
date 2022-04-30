@@ -8,24 +8,21 @@
           type="radio"
           name="fav_language"
           @click="checkAnswer(options[index], question.answer)"
+          :disabled="isClicked"
         />
         <label class="option">{{
           options[index] + ": " + item.content
         }}</label>
       </div>
 
-
-
-
-      <label class="option">
-        {{ indicator }}
-      </label>
+      <span class="option correct" v-show="isCorrect"></span>
+      <span class="option incorrect" v-show="!isCorrect && isCorrect != null"></span>
       <button type="button" class="showAnswer" @click="toggleAnswer">
         Hint
       </button>
     </form>
     <p v-if="showAnswer">
-      {{ item.explaination }}
+      {{ question.explaination }}
     </p>
   </div>
 </template>
@@ -38,7 +35,8 @@ export default {
     return {
       showAnswer: false,
       options: ["A", "B", "C", "D"],
-      indicator: "",
+      isCorrect: null,
+      isClicked: null,
     };
   },
   methods: {
@@ -53,10 +51,11 @@ export default {
       // console.log(this.questionId);
       if (pickedAnswer === answer) {
         // console.log(true);
-        this.indicator = "Correct!";
+        this.isCorrect = true;
       } else {
-        this.indicator = "Wrong!";
+        this.isCorrect = false;
       }
+      this.isClicked = true;
     },
   },
 };
@@ -75,5 +74,14 @@ export default {
 
 .showAnswer:active {
   box-shadow: 0 0 0 0.1rem rgba(0, 0, 0, 0.5);
+}
+
+.correct:before {
+    content: '\2714';
+    color: #008100;
+}
+.incorrect:before {
+    content: '\2716';
+    color: #b20610;
 }
 </style>
