@@ -82,7 +82,7 @@ public class ArticleService {
         // delete the paragraph of the article
         article.getParagraphs().clear();
         // delete the questions of the article
-        article.getQuestions().clear();
+        // article.getQuestions().clear();
         // delete the comments of the article
         article.getComments().clear();
 

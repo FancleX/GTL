@@ -39,10 +39,6 @@ public class Article {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "article_id")
-    private List<Question> questions;
-
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "article_id")
     private List<Comment> comments;
 
 
