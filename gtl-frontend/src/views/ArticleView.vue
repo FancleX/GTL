@@ -48,62 +48,39 @@
                 :key="item"
                 style="white-space: pre-line"
               >
-                <h1 class="subheader" :id="index">{{ item.subHeader }}</h1>
-                {{ item.content }}
+                <h1 class="subheader" :id="index" v-if="item.subHeader.length !== 0">{{ item.subHeader }}</h1>
+                  {{ item.content }}
+
+                <!-- questions -->
+                <div class="row" v-if="item.questions.length !== 0">
+                  <div class="col-sm-12 col-md-12">
+                    <h1 class="subheader">Exercise</h1>
+                    <ol>
+                      <li v-for="problem in item.questions" :key="problem">
+                        <ProblemHandle :question="problem" />
+                      </li>
+                    </ol>
+                  </div>
+                </div>
               </article>
             </div>
           </section>
 
           <!-- questions -->
-          <div class="row articleBody">
+          <!-- <div class="row articleBody">
             <div class="col-sm-10 col-md-10">
               <h1 class="subheader">Exercise</h1>
               <ol>
-                <li v-for="(item, index) in questions" :key="item" :id="currentQuestion">
-                  <p style="white-space: pre-line">{{ item.description }}</p>
-                  <form>
-                    <input
-                      type="radio"
-                      name="fav_language"
-                      @click="checkAnswer('A', item.answer, index)"
-                    />
-                    <label class="option">A</label>
-                    <input
-                      type="radio"
-                      name="fav_language"
-                      @click="checkAnswer('B', item.answer, index)"
-                    />
-                    <label class="option">B</label>
-                    <input
-                      type="radio"
-                      name="fav_language"
-                      @click="checkAnswer('C', item.answer, index)"
-                    />
-                    <label class="option">C</label>
-                    <input
-                      type="radio"
-                      name="fav_language"
-                      @click="checkAnswer('D', item.answer, index)"
-                    />
-                    <label class="option">D</label>
-                    <label class="option" v-show="currentQuestion === index">
-                      {{ indicator }}
-                    </label>
-                    <button type="button" class="showAnswer" @click="toggleAnswer">
-                      Show answer & explaination
-                    </button>
-                  </form>
-                  <p v-if="showAnswer && currentQuestion === index">
-                    {{ item.explaination }}
-                  </p>
+                <li v-for="item in questions" :key="item">
+                  <ProblemHandle :question="item" />
                 </li>
               </ol>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
 
-      <div class="row">
+      <!-- <div class="row">
         <div class="col"></div>
         <div class="col-sm-10 col-md-8">
           <section class="discussion">
@@ -122,7 +99,8 @@
           </section>
         </div>
         <div class="col"></div>
-      </div>
+      </div> -->
+      <ArticleComments :userComment="comments" :userId="userId" :articleId="articleId" />
     </div>
   </div>
 
@@ -133,9 +111,12 @@
 
 <script>
 import axios from "axios";
+import ProblemHandle from "../components/ProblemHandle.vue";
+import ArticleComments from "../components/ArticleComments.vue";
 
 export default {
   name: "ArticleDisplay",
+  components: { ArticleComments, ProblemHandle },
   data() {
     return {
       // article
@@ -143,14 +124,9 @@ export default {
       articleId: null,
       header: "",
       paragraphs: [],
-      questions: [],
       comments: [],
-      commentMakerIds: [],
-      commentMakerNames: [],
+
       jumpingTarget: "",
-      indicator: "",
-      currentQuestion: null,
-      submitComment: "",
 
       // user
       userId: null,
@@ -160,14 +136,10 @@ export default {
     this.init();
   },
   methods: {
-    toggleAnswer() {
-      this.showAnswer = true;
-    },
     init() {
       this.articleId = this.$route.params.id;
       // console.log(this.articleId);
       this.fetchArticle();
-      this.fetchCommentMakerId();
       this.fetchUser();
       // this.getCommentMaker();
     },
@@ -178,7 +150,6 @@ export default {
           // console.log(response);
           this.header = response.data.data.header;
           this.paragraphs = response.data.data.paragraphs;
-          this.questions = response.data.data.questions;
           this.comments = response.data.data.comments;
           // console.log(this.header);
           // console.log(this.paragraphs);
@@ -189,72 +160,10 @@ export default {
           alert(error);
         });
     },
-    async fetchCommentMakerId() {
-      await axios
-        .get("article/getCommentMaker/" + this.articleId)
-        .then((response) => {
-          // console.log(response);
-          this.commentMakerIds = response.data.data;
-          // console.log(self.commentMakerIds);
-          this.getCommentMaker(this.commentMakerIds);
-        })
-        .catch((error) => {
-          alert(error);
-        });
-    },
-    async getCommentMaker(ids) {
-      // console.log(ids);
-      await axios
-        .post("user/getNames", {
-          userIds: ids,
-        })
-        .then((response) => {
-          // console.log(response);
-          this.commentMakerNames = response.data.data;
-          // console.log(this.commentMakerNames)
-        })
-        .catch((error) => {
-          alert(error);
-        });
-    },
     jumpingTo(index) {
       this.jumpingTarget = "#";
       this.jumpingTarget += index;
       // console.log(this.jumpingTarget)
-    },
-    checkAnswer(pickedAnswer, answer, index) {
-      // console.log(pickedAnswer);
-      // console.log(answer)
-      this.currentQuestion = index;
-      this.showAnswer = false;
-      // console.log(this.questionId);
-      if (pickedAnswer === answer) {
-        // console.log(true);
-        this.indicator = "Correct!";
-      } else {
-        this.indicator = "Wrong!";
-      }
-    },
-    async commitComment() {
-      if (this.submitComment !== "" && this.submitComment.trim().length !== 0) {
-        await axios
-          .post("article/addComment", {
-            userId: 1,
-            articleId: this.articleId,
-            message: this.submitComment,
-          })
-          .then((response) => {
-            console.log(response);
-            if (response.data.message === "succeed") {
-              alert("Thanks for comments!");
-            }
-          })
-          .catch((error) => {
-            alert(error);
-          });
-      } else {
-        alert("Comments can not be empty!");
-      }
     },
     fetchUser() {
       try {
@@ -272,14 +181,14 @@ export default {
         })
         .then((response) => {
           if (response.data.code === 200) {
-              alert("Added a bookmark");
-              let bookmark = JSON.parse(sessionStorage.userBookmarks);
-              const data = {
-                articleId: this.articleId,
-                articleHeader: this.header
-              }
-              bookmark.push(data);
-              sessionStorage.userBookmarks = JSON.stringify(bookmark);
+            alert("Added a bookmark");
+            let bookmark = JSON.parse(sessionStorage.userBookmarks);
+            const data = {
+              articleId: this.articleId,
+              articleHeader: this.header,
+            };
+            bookmark.push(data);
+            sessionStorage.userBookmarks = JSON.stringify(bookmark);
           } else {
             alert(response.data.message);
           }
@@ -352,7 +261,7 @@ export default {
 
 .articleBody {
   width: 100%;
-  padding: 0 2rem 1rem 1rem;
+  padding: 0 1rem 1rem 1rem;
   text-align: justify;
   line-height: 2rem;
   font-size: 1.1rem;
@@ -361,43 +270,7 @@ export default {
 .subheader {
   font-size: 1.5rem;
   text-decoration: underline;
+  margin-top: 10px;
 }
 
-.option {
-  padding-left: 5px;
-  padding-right: 2rem;
-}
-
-.showAnswer {
-  padding: 5px;
-  border-radius: 10px;
-}
-
-.showAnswer:active {
-  box-shadow: 0 0 0 0.1rem rgba(0, 0, 0, 0.5);
-}
-
-.discussion {
-  width: auto;
-  margin: 3rem;
-  border: 2px dashed #303137;
-  background-color: rgba(255, 255, 255, 0.3);
-  border-radius: 5px;
-}
-
-.discussionTitle {
-  font-size: 1.2rem;
-  padding-left: 0.3rem;
-}
-
-.breakLine {
-  width: 100%;
-  border: #303137;
-}
-
-.discussionContent {
-  width: 100%;
-  padding-left: 0.3rem;
-  border-top: 2px solid #303137;
-}
 </style>

@@ -43,7 +43,7 @@
             </div>
             <div class="carousel-inner">
               <div class="carousel-item active">
-                <router-link :to="{ name: 'ArticleDisplay', params:{ id: articleIds[0] }}">
+                <router-link :to="{ name: 'ArticleView', params:{ id: articleIds[0] }}">
                   <img
                     :src= "imgUrls[0]"
                     class="d-block img-fluid img-center"
@@ -51,7 +51,7 @@
                 /></router-link>
               </div>
               <div class="carousel-item">
-                <router-link :to="{ name: 'ArticleDisplay', params:{ id: articleIds[1] }}">
+                <router-link :to="{ name: 'ArticleView', params:{ id: articleIds[1] }}">
                   <img
                     :src="imgUrls[1]"
                     class="d-block img-fluid img-center"
@@ -59,7 +59,7 @@
                 /></router-link>
               </div>
               <div class="carousel-item">
-                <router-link :to="{ name: 'ArticleDisplay', params:{ id: articleIds[2] }}">
+                <router-link :to="{ name: 'ArticleView', params:{ id: articleIds[2] }}">
                   <img
                     :src="imgUrls[2]"
                     class="d-block img-fluid img-center"

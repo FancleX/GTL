@@ -6,7 +6,7 @@
           <h1 class="header">Featured Sections</h1>
         </div>
         <div class="content-wrapper">
-          <router-link :to="{ name: 'ArticleDisplay', params: {id: data.id} }" class="linkTag" v-for="data in dataArr" :key="data.id">
+          <router-link :to="{ name: 'ArticleView', params: {id: data.id} }" class="linkTag" v-for="data in dataArr" :key="data.id">
             <div class="content-object">
               <div class="content-box">
                 <img :src="data.imgAddress" class="img" />
@@ -18,10 +18,6 @@
         </div>
       </div>
     </section>
-
-    <!-- <div class="articlePicker" v-if="goArticle">
-      <ArticleDisplay :articleToDisplay="articlePicked" />
-    </div> -->
   </div>
 </template>
 
