@@ -13,7 +13,7 @@
     <div class="collapse navbar-collapse" id="main_nav">
       <ul class="navbar-nav">
         <li class="nav-item dropdown" id="myDropdown">
-          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" >
+          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" @click="fetchUserInfo()">
             <img
               src="../assets/userIcon.png"
               alt="user-profileImg"
@@ -58,25 +58,55 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "UserProfile",
-  props: ["userAccountInfo", "userBookmark", "userContribution"],
+  props: ["userAccountInfo"],
   data() {
     return {
-      bookmark: this.userBookmark,
+      bookmark: [],
+      userContribution: [],
     };
   },
-//   watch: {
-//     bookmark(newVal, oldVal) {
-//         console.log(newVal)
-//       if (newVal.userBookmark.length !== oldVal.userBookmark.length) {
-//           this.$data.bookmark = newVal;
-//         console.log(this.$data.bookmark);
-//       }
-//       //   location.reload();
-//     },
-//     deep: true
-//   },
+  // mounted() {
+  //   this.init();
+  // },
+  methods: {
+    // init() {
+    //   this.fetchUserInfo();
+    // },
+    async fetchUserInfo() {
+      await axios
+        .get("user/" + parseInt(this.userAccountInfo.id))
+        .then((response) => {
+          // get bookmark
+          this.bookmark = [];
+          let bookmarkData = response.data.data.bookMarks;
+          for (let i = 0; i < bookmarkData.length; i++) {
+            let temp = {
+              articleId: bookmarkData[i].id,
+              articleHeader: bookmarkData[i].header,
+            };
+            this.bookmark.push(temp);
+          }
+
+          // get contribution
+          this.userContribution = [];
+          let contributionArr = response.data.data.contribution;
+          for (let i = 0; i < contributionArr.length; i++) {
+            let temp = {
+              articleId: contributionArr[i].id,
+              articleHeader: contributionArr[i].header,
+            };
+            this.userContribution.push(temp);
+          }
+        })
+        .catch((error) => {
+          alert(error);
+        });
+    },
+  },
 };
 </script>
 

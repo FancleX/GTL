@@ -31,7 +31,7 @@
           </ul>
           <form class="d-flex">
             <div v-if="userId">
-              <UserProfile :userAccountInfo='user' :userBookmark='bookmark' :userContribution='contributions' />
+              <UserProfile :userAccountInfo='user' />
             </div>
             <button
               class="btn btn-outline-success"
@@ -88,11 +88,8 @@ export default {
   data() {
     return {
       userId: null,
-      data: sessionStorage.getItem('userAccount'),
     
       user: null,
-      bookmark: [],
-      contributions: [],
     };
   },
   mounted() {
@@ -113,13 +110,13 @@ export default {
         this.userId = user.id;
         this.user = user;
         
-        // get user's bookmark
-        const bookmark = JSON.parse(sessionStorage.userBookmarks);
-        this.bookmark = bookmark;
+        // // get user's bookmark
+        // const bookmark = JSON.parse(sessionStorage.userBookmarks);
+        // this.bookmark = bookmark;
         
-        // get user's contribution
-        const contribution = JSON.parse(sessionStorage.userContributions);
-        this.contributions = contribution; 
+        // // get user's contribution
+        // const contribution = JSON.parse(sessionStorage.userContributions);
+        // this.contributions = contribution; 
       } catch (e) {
         return;
       }
