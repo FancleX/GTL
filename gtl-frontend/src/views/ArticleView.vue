@@ -12,7 +12,9 @@
         </div>
         <div class="col">
           <div v-if="userId">
-            <button type="button" @click="bookmark()">Bookmark</button>
+            <button type="button" class="bookmarkButtion" @click="bookmark()">
+              &hearts;Bookmark
+            </button>
           </div>
         </div>
       </div>
@@ -58,7 +60,11 @@
                 <!-- img -->
                 <div v-if="item.imgSrcList.length !== 0">
                   <div v-for="img in item.imgSrcList" :key="img" class="articleBody">
-                    <img :src="getImgUrl(index, img.imgSrc)" class="" alt="paragraphImg" />
+                    <img
+                      :src="getImgUrl(index, img.imgSrc)"
+                      class=""
+                      alt="paragraphImg"
+                    />
                   </div>
                 </div>
 
@@ -85,7 +91,7 @@
   </div>
 
   <div v-else>
-    <p>Loading page ...</p>
+    <p>Loading ...</p>
   </div>
 </template>
 
@@ -163,13 +169,6 @@ export default {
         .then((response) => {
           if (response.data.code === 200) {
             alert("Added a bookmark");
-            let bookmark = JSON.parse(sessionStorage.userBookmarks);
-            const data = {
-              articleId: this.articleId,
-              articleHeader: this.header,
-            };
-            bookmark.push(data);
-            sessionStorage.userBookmarks = JSON.stringify(bookmark);
           } else {
             alert(response.data.message);
           }
@@ -179,8 +178,14 @@ export default {
         });
     },
     getImgUrl(paragraphIndex, imgName) {
-
-      const relativePath = '../imgMaterials/article' + this.articleId + '/paragraph' + (paragraphIndex + 1) + '/' + imgName + '.png';
+      const relativePath =
+        "../imgMaterials/article" +
+        this.articleId +
+        "/paragraph" +
+        (paragraphIndex + 1) +
+        "/" +
+        imgName +
+        ".png";
       return relativePath;
     },
   },
@@ -257,5 +262,11 @@ export default {
   font-size: 1.5rem;
   text-decoration: underline;
   margin-top: 10px;
+}
+
+.bookmarkButtion {
+  border-radius: 5px;
+  padding: 3px;
+  color: rgb(228, 79, 98)
 }
 </style>

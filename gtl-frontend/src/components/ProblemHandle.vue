@@ -44,11 +44,6 @@ export default {
       this.showAnswer = true;
     },
     checkAnswer(pickedAnswer, answer) {
-      // console.log(pickedAnswer);
-      // console.log(answer)
-      // this.currentQuestion = index;
-      // this.showAnswer = false;
-      // console.log(this.questionId);
       if (pickedAnswer === answer) {
         // console.log(true);
         this.isCorrect = true;

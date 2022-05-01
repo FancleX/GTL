@@ -22,7 +22,7 @@
             @keyup.enter="checkPassword()"
           />
         </div>
-        <button class="button" type="submit" @click="checkPassword()">Continue</button>
+        <button class="button" type="button" @click="checkPassword()">Continue</button>
         <p class="text">
           <a href="#" class="link">Forgot your password?</a>
         </p>
@@ -230,7 +230,6 @@ export default {
           alert(error);
         });
     },
-
     async getUserProfile() {
       await axios
         .get("user/" + this.userId)
@@ -241,30 +240,6 @@ export default {
             userName: response.data.data.account.userName,
           };
           sessionStorage.userAccount = JSON.stringify(userInfo);
-
-          // // store user bookmark
-          // let bookmarkData = response.data.data.bookMarks;
-          // let bookmark = [];
-          // for (let i = 0; i < bookmarkData.length; i++) {
-          //   let temp = {
-          //     articleId: bookmarkData[i].id,
-          //     articleHeader: bookmarkData[i].header,
-          //   };
-          //   bookmark.push(temp);
-          // }
-          // sessionStorage.userBookmarks = JSON.stringify(bookmark);
-
-          // // store user contributions
-          // let contributionArr = response.data.data.contribution;
-          // let contribution = [];
-          // for (let i = 0; i < contributionArr.length; i++) {
-          //   let temp = {
-          //     articleId: contributionArr[i].id,
-          //     articleHeader: contributionArr[i].header,
-          //   };
-          //   contribution.push(temp);
-          // }
-          // sessionStorage.userContributions = JSON.stringify(contribution);
         })
         .catch((error) => {
           alert(error);

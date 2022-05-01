@@ -8,6 +8,7 @@
         <div class="discussionContent" v-for="(item, index) in userComment" :key="item">
           <label> {{ commentMakerNames[index] }}: </label>
           {{ item.message }}
+          <span class="delete"></span>
         </div>
         <input
           class="discussionContent"
@@ -22,7 +23,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
 
 export default {
   name: "ArticleComments",
@@ -45,14 +46,15 @@ export default {
       if (this.submitComment !== "" && this.submitComment.trim().length !== 0) {
         await axios
           .post("article/addComment", {
-            userId: 1,
+            userId: parseInt(this.userId),
             articleId: parseInt(this.articleId),
             message: this.submitComment,
           })
           .then((response) => {
-            console.log(response);
+            // console.log(response);
             if (response.data.message === "succeed") {
               alert("Thanks for comments!");
+              window.location.reload();
             }
           })
           .catch((error) => {
@@ -117,5 +119,12 @@ export default {
   width: 100%;
   padding-left: 0.3rem;
   border-top: 2px solid #303137;
+}
+
+.delete:before {
+    content: '\2716';
+    color: #b20610;
+    float: right;
+    padding-right: 5px;
 }
 </style>
