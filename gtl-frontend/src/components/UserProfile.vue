@@ -28,7 +28,7 @@
           <ul class="dropdown-menu">
             <li>
               <a class="dropdown-item disabled" href="#">
-                {{ userAccountInfo.userName }}
+                {{ userAccountInfo.username }}
               </a>
             </li>
             <li>
@@ -64,31 +64,24 @@
 
 <script>
 import axios from "axios";
+import { user } from "@/composables/User";
 
 export default {
   name: "UserProfile",
-  props: ["userAccountInfo"],
+  // props: ["userAccountInfo"],
   data() {
     return {
-      // userAccountInfo: {},
+      userAccountInfo: {},
       bookmark: [],
       userContribution: [],
       // userId: null,
     };
   },
+  mounted() {
+    this.userAccountInfo = user;
+  },
   methods: {
-    // fetchUser() {
-    //   try {
-    //     // get user's account
-    //     const user = JSON.parse(sessionStorage.userAccount);
-    //     this.userAccountInfo = user;
-    //     this.userId = parseInt(this.userAccountInfo.id);
-    //   } catch (e) {
-    //     return;
-    //   }
-    // },
     async fetchUserInfo() {
-      // this.fetchUser();
       await axios
         .get("user/" + parseInt(this.userAccountInfo.id))
         .then((response) => {

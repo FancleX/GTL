@@ -158,4 +158,5 @@ public class ArticleService {
         List<Long> userIds = articleRepository.getCommentMaker(articleId);
         return ResultStatus.success(userIds);
     }
+
 }

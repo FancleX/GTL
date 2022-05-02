@@ -100,13 +100,15 @@
 <script>
 /* eslint-disable no-useless-escape */
 import axios from "axios";
-import store from "@/store";
+import { afterLogin } from "@/composables/User"
 
 export default {
   name: "LoginPage",
   props: ["userLogin"],
   data() {
     return {
+      // user: User,
+
       email: "",
       password: "",
       isValidEmail: true,
@@ -164,7 +166,9 @@ export default {
             this.userId = response.data.data;
             // console.log(userId);
             this.getUserProfile();
-            this.$emit("close");
+            // this.$emit("close");
+
+
             this.backwards();
           }
         })
@@ -241,8 +245,7 @@ export default {
             id: this.userId,
             userName: response.data.data.account.userName,
           };
-          //  this.$store.dispatch("userLogin", true);
-          sessionStorage.userAccount = JSON.stringify(userInfo);
+          afterLogin(userInfo.id, userInfo.userName);
         })
         .catch((error) => {
           alert(error);

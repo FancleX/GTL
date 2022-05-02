@@ -31,7 +31,7 @@
           </ul>
           <form class="d-flex">
             <div v-if="isLogin">
-              <UserProfile :userAccountInfo="user" />
+              <UserProfile />
             </div>
             <div v-else>
               <button
@@ -79,6 +79,7 @@
 
 <script>
 import UserProfile from "../components/UserProfile.vue";
+import { isLogin } from "@/composables/User";
 
 export default {
   name: "App",
@@ -87,25 +88,8 @@ export default {
   },
   data() {
     return {
-      user: null,
-      isLogin: false,
+      isLogin: isLogin,
     };
-  },
-  mounted() {
-    this.renderUserProfile();
-  },
-  methods: {
-    renderUserProfile() {
-      try {
-        // get user's account
-        const user = JSON.parse(sessionStorage.userAccount);
-        this.isLogin = true;
-        this.user = user;
-      } catch (e) {
-        this.isLogin = false;
-        return;
-      }
-    },
   },
 };
 </script>

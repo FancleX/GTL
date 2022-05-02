@@ -85,7 +85,11 @@
       </div>
 
       <!-- comments -->
-      <ArticleComments :userComment="comments" :userId="userId" :articleId="articleId" />
+      <ArticleComments
+        :userComment="comments"
+        :userId="userId"
+        :articleId="articleId"
+      />
     </div>
   </div>
 
@@ -98,6 +102,7 @@
 import axios from "axios";
 import ProblemHandle from "../components/ProblemHandle.vue";
 import ArticleComments from "../components/ArticleComments.vue";
+import { user, isLogin } from "@/composables/User";
 
 export default {
   name: "ArticleView",
@@ -113,10 +118,18 @@ export default {
 
       // user
       userId: null,
+      isLogin: isLogin,
     };
   },
   mounted() {
     this.init();
+  },
+  watch: {
+    isLogin(newVal) {
+      if (newVal !== null) {
+        this.fetchUser();
+      }
+    },
   },
   methods: {
     init() {
@@ -157,10 +170,9 @@ export default {
       });
     },
     fetchUser() {
-      try {
-        const user = JSON.parse(sessionStorage.userAccount);
-        this.userId = parseInt(user.id);
-      } catch (e) {
+      if (user.value) {
+        this.userId = user.value.id;
+      } else {
         return;
       }
     },
