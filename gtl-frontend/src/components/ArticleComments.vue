@@ -21,6 +21,8 @@
 
         <input
           class="discussionContent"
+          type="text"
+          contenteditable="true"
           placeholder="Leave your comments here: (press enter to submit)"
           v-if="userId"
           v-model="submitComment"
@@ -69,8 +71,7 @@ export default {
             // console.log(response);
             if (response.data.message === "succeed") {
               alert("Thanks for comments!");
-              // location.reload();
-              this.$router.push('/article/' + this.articleId);
+              location.reload();
             }
           })
           .catch((error) => {
@@ -86,7 +87,6 @@ export default {
         .then((response) => {
           // console.log(response);
           this.commentMakerIds = response.data.data;
-          // console.log(self.commentMakerIds);
           this.getCommentMaker(this.commentMakerIds);
         })
         .catch((error) => {
@@ -115,7 +115,7 @@ export default {
       .then(response => {
         if (response.data.code === 200){
           alert('Comment deleted');
-          // location.reload();
+          location.reload();
         } else {
           alert(response.data.message);
         }

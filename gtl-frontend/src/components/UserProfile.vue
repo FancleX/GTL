@@ -67,30 +67,30 @@ import axios from "axios";
 
 export default {
   name: "UserProfile",
-  // props: ["userAccountInfo"],
+  props: ["userAccountInfo"],
   data() {
     return {
-      userAccountInfo: {},
+      // userAccountInfo: {},
       bookmark: [],
       userContribution: [],
-      userId: null,
+      // userId: null,
     };
   },
   methods: {
-    fetchUser() {
-      try {
-        // get user's account
-        const user = JSON.parse(sessionStorage.userAccount);
-        this.userAccountInfo = user;
-        this.userId = parseInt(this.userAccountInfo.id);
-      } catch (e) {
-        return;
-      }
-    },
+    // fetchUser() {
+    //   try {
+    //     // get user's account
+    //     const user = JSON.parse(sessionStorage.userAccount);
+    //     this.userAccountInfo = user;
+    //     this.userId = parseInt(this.userAccountInfo.id);
+    //   } catch (e) {
+    //     return;
+    //   }
+    // },
     async fetchUserInfo() {
-      this.fetchUser();
+      // this.fetchUser();
       await axios
-        .get("user/" + this.userId)
+        .get("user/" + parseInt(this.userAccountInfo.id))
         .then((response) => {
           // get bookmark
           this.bookmark = [];

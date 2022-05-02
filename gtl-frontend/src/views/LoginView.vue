@@ -100,6 +100,7 @@
 <script>
 /* eslint-disable no-useless-escape */
 import axios from "axios";
+import store from "@/store";
 
 export default {
   name: "LoginPage",
@@ -240,6 +241,7 @@ export default {
             id: this.userId,
             userName: response.data.data.account.userName,
           };
+          //  this.$store.dispatch("userLogin", true);
           sessionStorage.userAccount = JSON.stringify(userInfo);
         })
         .catch((error) => {

@@ -35,18 +35,11 @@ export default {
   created() {
     this.fetchArticles();
   },
-  // beforeRouteEnter(to, from, next) {
-  //   next((vm) => {
-  //     console.log(from.path);
-  //     if (from.path === "/login") {
-  //       window.location.reload();
-  //     }
-  //   });
-  // },
   methods: {
     async fetchArticles() {
       await axios.get("article/preview")
       .then(response => {
+        // console.log(response)
         this.dataArr = response.data.data;
         // console.log(this.dataArr)
       })

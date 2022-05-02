@@ -3,23 +3,25 @@
   <div class="problemhandle">
     <p style="white-space: pre-line">{{ question.description }}</p>
     <form class="questionForm">
-      <div v-for="(item, index) in question.optionList" :key="item" style="display:inline-block">
-        <input
-        title="optinoList"
-          type="radio"
-          name="fav_language"
-          @click="checkAnswer(options[index], question.answer)"
-          :disabled="isClicked"
-        />
-        <label class="option">{{
-          options[index] + ": " + item.content
-        }}</label>
+      <div
+        v-for="(item, index) in question.optionList"
+        :key="item"
+        style="display: inline-block"
+      >
+        <div v-if="item.content !== ''">
+          <input
+            title="optinoList"
+            type="radio"
+            name="fav_language"
+            @click="checkAnswer(options[index], question.answer)"
+            :disabled="isClicked"
+          />
+          <label class="option">{{ options[index] + ": " + item.content }}</label>
+        </div>
       </div>
       <span class="option correct" v-show="isCorrect"></span>
       <span class="option incorrect" v-show="!isCorrect && isCorrect != null"></span>
-      <button type="button" class="showAnswer" @click="toggleAnswer">
-        Hint
-      </button>
+      <button type="button" class="showAnswer" @click="toggleAnswer">Hint</button>
     </form>
     <p v-if="showAnswer">
       {{ "Answer: " + question.answer + "\n" + question.explaination }}
@@ -66,7 +68,7 @@ export default {
   padding: 5px;
   border-radius: 10px;
   float: right;
-  margin-right: 5rem;
+  margin-right: 2rem;
 }
 
 .showAnswer:active {
@@ -74,12 +76,11 @@ export default {
 }
 
 .correct:before {
-    content: '\2714';
-    color: #008100;
+  content: "\2714";
+  color: #008100;
 }
 .incorrect:before {
-    content: '\2716';
-    color: #b20610;
+  content: "\2716";
+  color: #b20610;
 }
-
 </style>

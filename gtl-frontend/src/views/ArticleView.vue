@@ -46,8 +46,8 @@
               <article
                 class="articleBody"
                 v-for="item in paragraphs"
-                :key="item"
-                style="white-space: pre-line"
+                :key="item.order"
+                style="white-space: break-spaces"
               >
                 <!-- subheader -->
                 <h1 class="subheader" :id="item.order" v-if="item.subHeader !== ''">
@@ -134,6 +134,11 @@ export default {
           this.header = response.data.data.header;
           this.paragraphs = response.data.data.paragraphs;
           this.comments = response.data.data.comments;
+          this.paragraphs.sort(function (a, b) {
+            if (a.order !== b.order) {
+              return a.order - b.order;
+            }
+          });
           // console.log(this.header);
           // console.log(this.paragraphs);
           // console.log(this.questions);

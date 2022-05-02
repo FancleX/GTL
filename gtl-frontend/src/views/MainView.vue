@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid" >
     <!-- navbar -->
     <nav class="navbar navbar-expand-lg navbar-light navbar-custom">
       <div class="container-fluid">
@@ -26,12 +26,12 @@
               <router-link to="/explore" class="nav-link active">Explore</router-link>
             </li>
             <li class="nav-item">
-              <router-link to="/" class="nav-link active">About us</router-link>
+              <router-link to="/about" class="nav-link active">About us</router-link>
             </li>
           </ul>
           <form class="d-flex">
             <div v-if="isLogin">
-              <UserProfile />
+              <UserProfile :userAccountInfo="user" />
             </div>
             <div v-else>
               <button
@@ -52,7 +52,7 @@
     </div>
 
     <!-- Footer -->
-    <footer class="page-footer font-small">
+    <footer class="font-small">
       <div class="container-fluid">
         <div class="row">
           <!-- Copyright -->
@@ -91,9 +91,20 @@ export default {
       isLogin: false,
     };
   },
+  mounted() {
+    this.renderUserProfile();
+  },
   methods: {
     renderUserProfile() {
-      this.isLogin = !this.isLogin;
+      try {
+        // get user's account
+        const user = JSON.parse(sessionStorage.userAccount);
+        this.isLogin = true;
+        this.user = user;
+      } catch (e) {
+        this.isLogin = false;
+        return;
+      }
     },
   },
 };
@@ -102,6 +113,7 @@ export default {
 <style>
 .container-fluid {
   padding: 0;
+  margin: 0;
 }
 
 .navbar {
@@ -155,11 +167,11 @@ img.user-profileImg {
   width: 100%;
 }
 
-footer.page-footer {
+footer {
   position: relative;
   bottom: 0;
   width: 100%;
-  height: 1.5rem;
+  height: 1rem;
   margin-top: auto;
   border-top: 2px solid rgba(44, 44, 46, 0.5);
 }
@@ -188,4 +200,7 @@ footer.page-footer {
 .fa-instagram {
   color: #ffffff;
 }
+
+
+
 </style>

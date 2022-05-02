@@ -51,17 +51,17 @@
                 /></router-link>
               </div>
               <div class="carousel-item">
-                <router-link :to="{ name: 'ArticleView', params:{ id: articleIds[0] }}">
+                <router-link :to="{ name: 'ArticleView', params:{ id: articleIds[1] }}">
                   <img
-                    :src="imgUrls[0]"
+                    :src="imgUrls[1]"
                     class="d-block img-fluid img-center"
                     alt="second slide"
                 /></router-link>
               </div>
               <div class="carousel-item">
-                <router-link :to="{ name: 'ArticleView', params:{ id: articleIds[0] }}">
+                <router-link :to="{ name: 'ArticleView', params:{ id: articleIds[2] }}">
                   <img
-                    :src="imgUrls[0]"
+                    :src="imgUrls[2]"
                     class="d-block img-fluid img-center"
                     alt="third slide"
                 /></router-link>

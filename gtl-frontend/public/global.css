@@ -13,7 +13,7 @@ body {
     background: linear-gradient(#e6ffff, #c5c9ee, #c3f8f8);
     background-repeat: no-repeat;
     background-attachment: fixed;
-    width: 100%;
+    width: 100%; 
     overflow-x: hidden;
     display: flex;
     flex-direction: column;
