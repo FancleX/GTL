@@ -71,7 +71,7 @@ export default {
             // console.log(response);
             if (response.data.message === "succeed") {
               alert("Thanks for comments!");
-              // location.reload();
+              location.reload();
             }
           })
           .catch((error) => {
@@ -115,7 +115,7 @@ export default {
       .then(response => {
         if (response.data.code === 200){
           alert('Comment deleted');
-          // location.reload();
+          location.reload();
         } else {
           alert(response.data.message);
         }

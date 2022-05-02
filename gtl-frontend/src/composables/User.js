@@ -1,7 +1,7 @@
 import { StorageSerializers, useStorage } from '@vueuse/core';
 import { computed } from 'vue'
 
-export const user = useStorage("userAccount", null, undefined, {
+export const user = useStorage("userAccount", null, sessionStorage, {
     serializer: StorageSerializers.object
 })
 
