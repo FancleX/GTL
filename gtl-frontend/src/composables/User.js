@@ -13,3 +13,7 @@ export const afterLogin = (id, name) => {
 };
 
 export const isLogin = computed(() => user.value?.id);
+
+export const logout = () => {
+    user.value = null;
+}

@@ -55,6 +55,7 @@
                 </li>
               </ul>
             </li>
+            <a class="dropdown-item" href="#" @click="logout"><i class="fa fa-sign-out"></i> Logout </a>
           </ul>
         </li>
       </ul>
@@ -64,7 +65,7 @@
 
 <script>
 import axios from "axios";
-import { user } from "@/composables/User";
+import { user, logout } from "@/composables/User";
 
 export default {
   name: "UserProfile",
@@ -81,6 +82,7 @@ export default {
     this.userAccountInfo = user;
   },
   methods: {
+    logout,
     async fetchUserInfo() {
       await axios
         .get("user/" + parseInt(this.userAccountInfo.id))

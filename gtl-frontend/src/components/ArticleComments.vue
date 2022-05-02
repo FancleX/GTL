@@ -24,7 +24,7 @@
           type="text"
           contenteditable="true"
           placeholder="Leave your comments here: (press enter to submit)"
-          v-if="userId"
+          v-if="isLogin"
           v-model="submitComment"
           @keyup.enter="commitComment()"
         />
@@ -41,6 +41,7 @@
 
 <script>
 import axios from "axios";
+import { isLogin } from "@/composables/User";
 
 export default {
   name: "ArticleComments",
@@ -53,6 +54,7 @@ export default {
       commentMakerIds: [],
       commentMakerNames: [],
       submitComment: "",
+      isLogin: isLogin,
     };
   },
   methods: {

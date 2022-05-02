@@ -11,7 +11,7 @@
           </div>
         </div>
         <div class="col">
-          <div v-if="userId">
+          <div v-if="isLogin">
             <button type="button" class="bookmarkButtion" @click="bookmark()">
               &hearts;Bookmark
             </button>

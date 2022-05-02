@@ -48,7 +48,7 @@
     </nav>
 
     <div class="container dynamic">
-      <router-view :key="$route.fullPath" @close="renderUserProfile()" />
+      <router-view :key="$route.fullPath" />
     </div>
 
     <!-- Footer -->
@@ -184,7 +184,4 @@ footer {
 .fa-instagram {
   color: #ffffff;
 }
-
-
-
 </style>
