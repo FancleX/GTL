@@ -103,6 +103,7 @@ import axios from "axios";
 
 export default {
   name: "LoginPage",
+  props: ["userLogin"],
   data() {
     return {
       email: "",
@@ -162,6 +163,7 @@ export default {
             this.userId = response.data.data;
             // console.log(userId);
             this.getUserProfile();
+            this.$emit("close");
             this.backwards();
           }
         })
@@ -203,7 +205,6 @@ export default {
       ) {
         return;
       }
-
       await axios
         .post("user/sign_up", {
           account: {
@@ -248,10 +249,10 @@ export default {
     backwards() {
       if (window.history.length > 1) {
         // back to last level
-        this.$router.go(-1); 
+        this.$router.go(-1);
       } else {
-        this.$router.push('/');
-      }      
+        this.$router.push("/");
+      }
     },
   },
 };

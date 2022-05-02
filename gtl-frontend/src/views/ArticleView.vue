@@ -23,18 +23,17 @@
         <div class="col-md-4 navList">
           <ul class="navbar-vertical">
             <div class="nav-wrapper">
-              <a href="#articleHeader" style="text-decoration: none">
+              <a style="cursor: pointer" @click="jumpingTo('articleHeader')">
                 <li class="overview">Overview</li>
               </a>
               <a
-                :href="jumpingTarget"
-                @click="jumpingTo(index)"
-                style="text-decoration: none"
-                v-for="(item, index) in paragraphs"
+                @click="jumpingTo(item.order)"
+                style="cursor: pointer"
+                v-for="item in paragraphs"
                 :key="item"
               >
-                <li class="nav-list">
-                  {{ (item.subHeader || "").substring(0, 6) + "..." }}
+                <li class="nav-list" v-if="item.subHeader !== ''">
+                  {{ item.subHeader.substring(0, 6) + "..." }}
                 </li>
               </a>
             </div>
@@ -46,12 +45,12 @@
             <div class="format">
               <article
                 class="articleBody"
-                v-for="(item, index) in paragraphs"
+                v-for="item in paragraphs"
                 :key="item"
                 style="white-space: pre-line"
               >
                 <!-- subheader -->
-                <h1 class="subheader" :id="index" v-if="item.subHeader.length !== 0">
+                <h1 class="subheader" :id="item.order" v-if="item.subHeader !== ''">
                   {{ item.subHeader }}
                 </h1>
                 <!-- body -->
@@ -61,7 +60,7 @@
                 <div v-if="item.imgSrcList.length !== 0">
                   <div v-for="img in item.imgSrcList" :key="img" class="articleBody">
                     <img
-                      :src="getImgUrl(index, img.imgSrc)"
+                      :src="getImgUrl(item.order, img.imgSrc)"
                       class=""
                       alt="paragraphImg"
                     />
@@ -101,7 +100,7 @@ import ProblemHandle from "../components/ProblemHandle.vue";
 import ArticleComments from "../components/ArticleComments.vue";
 
 export default {
-  name: "ArticleDisplay",
+  name: "ArticleView",
   components: { ArticleComments, ProblemHandle },
   data() {
     return {
@@ -111,9 +110,6 @@ export default {
       header: "",
       paragraphs: [],
       comments: [],
-      publicPath: process.env.BASE_URL,
-
-      jumpingTarget: "",
 
       // user
       userId: null,
@@ -148,9 +144,12 @@ export default {
         });
     },
     jumpingTo(index) {
-      this.jumpingTarget = "#";
-      this.jumpingTarget += index;
-      // console.log(this.jumpingTarget)
+      let e = document.getElementById(index);
+      e.scrollIntoView({
+        block: "start",
+        behavior: "smooth",
+        inline: "nearest",
+      });
     },
     fetchUser() {
       try {
@@ -177,12 +176,12 @@ export default {
           alert(error);
         });
     },
-    getImgUrl(paragraphIndex, imgName) {
+    getImgUrl(paragraphOrder, imgName) {
       const relativePath =
         "../imgMaterials/article" +
         this.articleId +
         "/paragraph" +
-        (paragraphIndex + 1) +
+        paragraphOrder +
         "/" +
         imgName +
         ".png";
@@ -267,6 +266,11 @@ export default {
 .bookmarkButtion {
   border-radius: 5px;
   padding: 3px;
-  color: rgb(228, 79, 98)
+  color: rgb(228, 79, 98);
+}
+
+img {
+  max-width: 500px;
+  padding: 10px;
 }
 </style>

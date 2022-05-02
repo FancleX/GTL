@@ -5,17 +5,32 @@
       <section class="discussion">
         <div class="discussionTitle">Discussions:</div>
         <div class="breakLine"></div>
-        <div class="discussionContent" v-for="(item, index) in userComment" :key="item">
-          <label> {{ commentMakerNames[index] }}: </label>
-          {{ item.message }}
-          <span class="delete"></span>
+        <div v-if="userComment.length !== 0">
+          <div class="discussionContent" v-for="(item, index) in userComment" :key="item">
+            <label> {{ commentMakerNames[index] }}: </label>
+            {{ item.message }}
+
+            <span
+              style="cursor: pointer"
+              class="delete"
+              v-show="userId && userId == commentMakerIds[index]"
+              @click="deleteComment(index)"
+            ></span>
+          </div>
         </div>
+
         <input
           class="discussionContent"
           placeholder="Leave your comments here: (press enter to submit)"
+          v-if="userId"
           v-model="submitComment"
-          @keyup.enter="commitComment"
+          @keyup.enter="commitComment()"
         />
+        <div v-else class="discussionContent" disabled>
+          Please
+          <router-link to="/login"> login</router-link>
+          to comment!
+        </div>
       </section>
     </div>
     <div class="col"></div>
@@ -54,7 +69,8 @@ export default {
             // console.log(response);
             if (response.data.message === "succeed") {
               alert("Thanks for comments!");
-              window.location.reload();
+              // location.reload();
+              this.$router.push('/article/' + this.articleId);
             }
           })
           .catch((error) => {
@@ -92,6 +108,22 @@ export default {
           alert(error);
         });
     },
+    async deleteComment(commentIndex) {
+      const commentId = this.userComment[commentIndex].id;
+      // console.log(commentId);
+      await axios.delete('article/delete/comment/' + commentId)
+      .then(response => {
+        if (response.data.code === 200){
+          alert('Comment deleted');
+          // location.reload();
+        } else {
+          alert(response.data.message);
+        }
+      })
+      .catch(error => {
+        alert(error);
+      })
+    },
   },
 };
 </script>
@@ -122,9 +154,10 @@ export default {
 }
 
 .delete:before {
-    content: '\2716';
-    color: #b20610;
-    float: right;
-    padding-right: 5px;
+  content: "\2716";
+  color: #b20610;
+  float: right;
+  padding-right: 5px;
 }
+
 </style>

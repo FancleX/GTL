@@ -7,15 +7,8 @@ import '../src/config/axiosConfig'
 
 createApp(App).use(router).mount('#app')
 
-// window.onbeforeunload = function() {
-//     localStorage.clear();
-// };
-// window.addEventListener('storage',function(e){
-//     if(e.storageArea===sessionStorage){
-//         console.log(1)
-//     }
-// });
+window.onbeforeunload = function() {
+    localStorage.clear();
+};
 
-// window.onstorage = function(e) {
-//     console.log('The ' + e.key + ' key has been changed from ' + e.oldValue + ' to ' + e.newValue + '.');
-//   };
+

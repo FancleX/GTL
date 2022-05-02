@@ -27,6 +27,9 @@ public class Paragraph {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "index", nullable = false)
+    private Integer order;
+
     @Column(name = "subHeader", nullable = true)
     private String subHeader;
 

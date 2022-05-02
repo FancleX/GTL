@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid" >
     <button
       class="navbar-toggler"
       type="button"
@@ -13,7 +13,12 @@
     <div class="collapse navbar-collapse" id="main_nav">
       <ul class="navbar-nav">
         <li class="nav-item dropdown" id="myDropdown">
-          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" @click="fetchUserInfo()">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            data-bs-toggle="dropdown"
+            @click="fetchUserInfo()"
+          >
             <img
               src="../assets/userIcon.png"
               alt="user-profileImg"
@@ -62,23 +67,30 @@ import axios from "axios";
 
 export default {
   name: "UserProfile",
-  props: ["userAccountInfo"],
+  // props: ["userAccountInfo"],
   data() {
     return {
+      userAccountInfo: {},
       bookmark: [],
       userContribution: [],
+      userId: null,
     };
   },
-  // mounted() {
-  //   this.init();
-  // },
   methods: {
-    // init() {
-    //   this.fetchUserInfo();
-    // },
+    fetchUser() {
+      try {
+        // get user's account
+        const user = JSON.parse(sessionStorage.userAccount);
+        this.userAccountInfo = user;
+        this.userId = parseInt(this.userAccountInfo.id);
+      } catch (e) {
+        return;
+      }
+    },
     async fetchUserInfo() {
+      this.fetchUser();
       await axios
-        .get("user/" + parseInt(this.userAccountInfo.id))
+        .get("user/" + this.userId)
         .then((response) => {
           // get bookmark
           this.bookmark = [];
@@ -136,9 +148,7 @@ export default {
     display: block;
   }
 }
-/* ============ desktop view .end// ============ */
 
-/* ============ small devices ============ */
 @media (max-width: 991px) {
   .dropdown-menu .dropdown-menu {
     margin-left: 0.7rem;

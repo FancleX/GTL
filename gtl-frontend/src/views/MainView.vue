@@ -30,24 +30,25 @@
             </li>
           </ul>
           <form class="d-flex">
-            <div v-if="userId">
-              <UserProfile :userAccountInfo="user" />
+            <div v-if="isLogin">
+              <UserProfile />
             </div>
-            <button
-              class="btn btn-outline-success"
-              type="button"
-              @click="$router.push('/login')"
-              v-if="!userId"
-            >
-              Login
-            </button>
+            <div v-else>
+              <button
+                class="btn btn-outline-success"
+                type="button"
+                @click="$router.push('/login')"
+              >
+                Login
+              </button>
+            </div>
           </form>
         </div>
       </div>
     </nav>
 
     <div class="container dynamic">
-      <router-view :key="$route.fullPath" />
+      <router-view :key="$route.fullPath" @close="renderUserProfile()" />
     </div>
 
     <!-- Footer -->
@@ -84,33 +85,15 @@ export default {
   components: {
     UserProfile,
   },
-  beforeRouteEnter(to, from, next) {
-    next((vm) => {
-      console.log(from.path);
-      if (from.path === "/login") {
-        // window.location.reload();
-      }
-    });
-  },
   data() {
     return {
-      userId: null,
       user: null,
+      isLogin: false,
     };
   },
-  mounted() {
-    this.fetchUser();
-  },
   methods: {
-    fetchUser() {
-      try {
-        // get user's account
-        const user = JSON.parse(sessionStorage.userAccount);
-        this.userId = user.id;
-        this.user = user;
-      } catch (e) {
-        return;
-      }
+    renderUserProfile() {
+      this.isLogin = !this.isLogin;
     },
   },
 };
