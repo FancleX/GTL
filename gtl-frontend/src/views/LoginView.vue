@@ -223,7 +223,7 @@ export default {
           comments: [],
         })
         .then((response) => {
-          console.log(response);
+          // console.log(response);
           if (response.data.message !== "succeed") {
             this.signupMsg = response.data.message;
             this.hasMsg = true;
@@ -323,7 +323,6 @@ export default {
   width: 100%;
   padding: 0.75rem;
   box-sizing: border-box;
-  border-radius: 20px;
   border: 1px solid #dddddd;
   outline: none;
   background: #f0f0f0;

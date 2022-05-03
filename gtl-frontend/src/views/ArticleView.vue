@@ -33,7 +33,7 @@
                 :key="item"
               >
                 <li class="nav-list" v-if="item.subHeader !== ''">
-                  {{ item.subHeader.substring(0, 6) + "..." }}
+                  {{ item.subHeader.substring(0, 12) + "..." }}
                 </li>
               </a>
             </div>
@@ -85,11 +85,7 @@
       </div>
 
       <!-- comments -->
-      <ArticleComments
-        :userComment="comments"
-        :userId="userId"
-        :articleId="articleId"
-      />
+      <ArticleComments :userComment="comments" :userId="userId" :articleId="articleId" />
     </div>
   </div>
 
@@ -289,5 +285,9 @@ export default {
 img {
   max-width: 500px;
   padding: 10px;
+}
+
+.nav-list {
+  padding: 5px 3rem;
 }
 </style>
