@@ -4,7 +4,6 @@
 
 <script>
 import MainView from './views/MainView.vue'
-import '@/composables/Scroller'
 
 export default {
   name: "App",
