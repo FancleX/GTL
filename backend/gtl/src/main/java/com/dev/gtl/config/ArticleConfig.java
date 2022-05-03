@@ -15,6 +15,9 @@
 // import org.springframework.context.annotation.Configuration;
 
 
+/**
+ * Initialize article without API, service... Test model structure
+ */
 // @Configuration
 // public class ArticleConfig {
     

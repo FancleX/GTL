@@ -81,8 +81,6 @@ public class ArticleService {
         Article article = articleRepository.getById(id);
         // delete the paragraph of the article
         article.getParagraphs().clear();
-        // delete the questions of the article
-        // article.getQuestions().clear();
         // delete the comments of the article
         article.getComments().clear();
 

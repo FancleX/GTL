@@ -21,10 +21,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/article")
 @CrossOrigin
+/**
+ * Article Controller.
+ */
 public class ArticleController {
 
+    /**
+     * Article service
+     */
     private final ArticleService articleService;
 
+    /**
+     * Inject Article service.
+     * 
+     * @param articleService article service
+     */
     @Autowired
     public ArticleController(ArticleService articleService) {
         this.articleService = articleService;
@@ -32,56 +43,100 @@ public class ArticleController {
 
     /* #################################################################################### */
     // article
-    // get all articles
+    /**
+     * Get all articles.
+     * 
+     * @return all articles
+     */
     @GetMapping("/explorer")
     public BaseResponse<List<Article>> getArticles() {
         return articleService.getArticles();
     }
 
-    // get a specific article
+    /**
+     * Get a specific article.
+     * 
+     * @param id article Id
+     * @return the specific article
+     */
     @GetMapping("/search/{articleId}")
     public BaseResponse<Article> getArticleById(@PathVariable(value = "articleId") Long id) {
         return articleService.getArticleById(id);
     }
 
-    // create an article
+    /**
+     * Create an article.
+     *  
+     * @param article article
+     * @param id user Id
+     * @return article id createby user id
+     */
     @PostMapping("/add/{userId}")
     public BaseResponse<String> addArticle(@RequestBody Article article, @PathVariable(value = "userId") Long id) {
         return articleService.addArticle(article, id);
     }
 
-    // delete an article
+    /**
+     * Delete an article.
+     * 
+     * @param id the id of the article that will be deleted
+     * @return the id of the deleted article
+     */
     @DeleteMapping("/delete/{articleId}")
     public BaseResponse<String> deleteArticle(@PathVariable(value = "articleId") Long id) {
         return articleService.deleteArticle(id);
     }
 
-    // modify an article
+    /**
+     * Modify an article.
+     * 
+     * @param article the article needs to be modified
+     * @return status "updated"
+     */
     @PutMapping("/edit")
     public BaseResponse<String> editArticle(@RequestBody Article article) {
         return articleService.editArticle(article);
     }
 
-    // add comment
-    // JSON format {"userId": xxx, "articleId": xxx, "message": "xxxx"}
+    /**
+     * Add a comment.
+     * JSON format {"userId": xxx, "articleId": xxx, "message": "xxxx"}
+     * 
+     * @param comment the comment to be added
+     * @return message 
+     */
     @PostMapping("/addComment")
     public BaseResponse<String> addComment(@RequestBody String comment) {
         return articleService.addComment(comment);
     }
 
-    // delete comment
+    /**
+     * Delete a comment.
+     * 
+     * @param id id of the comment
+     * @return message
+     */
     @DeleteMapping("/delete/comment/{commentId}")
     public BaseResponse<String> deleteComment(@PathVariable(value = "commentId") Long id) {
         return articleService.deleteComment(id);
     }
 
-    // get preview article (id, img, header, partial content)
+    /**
+     * Get preview article (id, img, header, partial content).
+     * 
+     * @return JSON array
+     */
     @GetMapping("/preview")
     public BaseResponse<JSONArray> getPreview() {
         return articleService.getPreview();
     }
 
-    // get user id that who made this comment
+    /**
+     * Get user id that who made this comment.
+     * 
+     * @param articleId article Id
+     * @return the username of those ids
+     */
     @GetMapping("/getCommentMaker/{articleId}")
     public BaseResponse<List<Long>> getCommentMaker(@PathVariable(value = "articleId") Long articleId) {
         return articleService.getCommentMaker(articleId);

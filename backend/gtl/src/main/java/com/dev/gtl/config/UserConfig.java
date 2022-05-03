@@ -14,6 +14,9 @@
 // import org.springframework.context.annotation.Bean;
 // import org.springframework.context.annotation.Configuration;
 
+/**
+ * Initialize user without API, service... Test model structure
+ */
 // @Configuration
 // public class UserConfig {
     

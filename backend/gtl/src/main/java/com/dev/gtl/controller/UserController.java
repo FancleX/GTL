@@ -20,6 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/user")
 @CrossOrigin
+/**
+ * User controller.
+ */
 public class UserController {
 
     private final UserService userService;
@@ -29,45 +32,81 @@ public class UserController {
         this.userService = userService;
     }
 
-    // get a sepcific user
+    /**
+     * Get a sepcific user.
+     * 
+     * @param id user id
+     * @return user info
+     */
     @GetMapping("/{userid}")
     public BaseResponse<User> getUserById(@PathVariable(value = "userid") Long id) {
         return userService.getUserById(id);
     }
 
-    // create a new user
+    /**
+     * Create a new user.
+     * 
+     * @param user user info 
+     * @return message
+     */
     @PostMapping("/sign_up")
     public BaseResponse<String> addUser(@RequestBody User user) {
         return userService.addUser(user);
     }
 
-    // user signin
-    // JSON format {"email": "xxxx", "password": "xxxx"}
+    /**
+     * User signin.
+     * JSON format {"email": "xxxx", "password": "xxxx"}
+     * 
+     * @param data
+     * @return message
+     */
     @PostMapping("/sign_in")
     public BaseResponse<Long> isSignIn(@RequestBody String data) {
         return userService.isSignIn(data);
     }
 
-    // get bookmarks
+    /**
+     * Get bookmarks.
+     * 
+     * @param id user id
+     * @return article
+     */
     @GetMapping("/bookmark/{userId}")
     public BaseResponse<List<Article>> getBookMarks(@PathVariable(value = "userId") Long id) {
         return userService.getBookMarks(id);
     }
 
-    // add bookmarks
-    // JSON format {"articleId": xxxxx, "userId": xxxx}
+    /**
+     * Add bookmarks.
+     * JSON format {"articleId": xxxxx, "userId": xxxx}
+     * 
+     * @param data 
+     * @return message
+     */
     @PostMapping("/bookmark/add")
     public BaseResponse<String> addBookMarks(@RequestBody String data) {
         return userService.addBookMarks(data);
     }
 
-    // get all comments of the user
+    /**
+     * Get all comments of the user.
+     * 
+     * @param userId user id
+     * @return a list of comments
+     */
     @GetMapping("/comments/{userId}")
     public BaseResponse<List<Comment>> getComments(@PathVariable(value = "userId") Long userId) {
         return userService.getComments(userId);
     }
 
-    // JSON format {"userIds": []}
+    /**
+     * Get who make the comments.
+     * JSON format {"userIds": []}
+     * 
+     * @param ids array of user id
+     * @return list of username
+     */
     @PostMapping("/getNames")
     public BaseResponse<List<String>> getNames(@RequestBody String ids){
         return userService.getNames(ids);
