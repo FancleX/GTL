@@ -1,7 +1,7 @@
 ## Get To Learn (online learning community)
 
 ***
-<a href='http://thegettolearn.com'><img src='./assets/demo.png'></a>
+[![MainPage](./assets/demo.PNG)](http://thegettolearn.com)
 
 ***
 ### Functionality
