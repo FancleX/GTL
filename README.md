@@ -1,7 +1,7 @@
 ## Get To Learn (online learning community)
 
 ***
-[![MainPage](./assets/demo.PNG)](http://thegettolearn.com)
+[![MainPage](./assets/mainpage.PNG)](http://thegettolearn.com)
 
 ***
 ### Functionality
